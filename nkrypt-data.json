@@ -1,0 +1,782 @@
+{
+  "project": {
+    "name": "NKRYPT",
+    "location": "Questacon, Canberra, Australia",
+    "designer": "Dr Stuart Kohlhagen PSM",
+    "installed": "March 2013",
+    "context": "Centenary of Canberra (1913-2013)",
+    "plaque": {
+      "haiku": "Mystery beyond\nDecipher the veiled meaning\nRenown awaits you",
+      "key_phrase": "From simple to hard, the key to the last is found in all the rest.",
+      "centenary_note": "One code within NKRYPT celebrates Canberra's Centenary. Be first to decipher it and win a great prize.",
+      "supporters": "Mr Eddie Kutner and Mr Leon Kemplar"
+    },
+    "meta_pattern": "Every solved plaintext describes its own cipher's history or technique (self-referential)."
+  },
+  "naming": {
+    "note": "Two naming schemes exist. meme.net.au uses letters A-H by fiducial spacing. dkrypt.org uses numbers 1-8.",
+    "mapping": {
+      "A": "7",
+      "B": "4",
+      "C": "6",
+      "D": "2",
+      "E": "8",
+      "F": "3",
+      "G": "5",
+      "H": "1"
+    }
+  },
+  "pillars": [
+    {
+      "letter": "A",
+      "number": 7,
+      "common_name": "Caesar",
+      "total_height_mm": 1709,
+      "extension_above_ring_mm": 0,
+      "fiducial_separation_mm": 0,
+      "fiducial_direction": "south-east",
+      "traversal_code": "DNOI",
+      "ring_cipher": {
+        "grid_size": "26x5",
+        "height_mm": 1709,
+        "endpoint": "below_fiducial",
+        "start_row": "top"
+      },
+      "ciphers": [
+        {
+          "position": "lower",
+          "name": "Geospatial",
+          "status": "SOLVED",
+          "type": "Number string as lat/lon GPS coordinates",
+          "ciphertext": "35248614916353547101490974\n24725391509414892533731941\n14909573522681490367353636\n41635353213194116435346709\n81491040353180149092635377",
+          "plaintext_summary": "10 Canberra suburbs named after scientists/innovators",
+          "suburbs": [
+            "Ainslie",
+            "Parkes",
+            "Deakin",
+            "Farrer",
+            "Chifley",
+            "Rivett",
+            "Mawson",
+            "Florey",
+            "Hackett",
+            "Banks"
+          ],
+          "note": "Solution to Questacon's Centenary Code challenge (2014)",
+          "attribution": "Glenn McIntosh"
+        },
+        {
+          "position": "upper",
+          "name": "Caesar/shift/al-Kindi/Vigenere",
+          "status": "SOLVED",
+          "type": "Progressive shift ciphers (Caesar shift 1, shift 2, al-Kindi frequency, Vigenere)",
+          "vigenere_key": "VIGENERE",
+          "plaintext_summary": "Poem about four cipher types",
+          "attribution": "Gregory Lloyd",
+          "ciphertext": "A LETTER SHIFT A CIPHER MAKES\nA FAMOUS ROMANS NAME IT TAKES\n\nB MFUUFS TIJGU B DJQIFS NBLFT\nB GBNPVT SPNBOT OBNF JU UBLFT\n\nC UJKHV QH VYQ AQW PQY ECP DTGCM\nDWV QVJGT OQXGU C EQFG ECP OCMG\n\nKRZHYHU WKHB EH VZDSSHG DERXW\nD NXID PDQ FRXOG ILQG WKHP RXW\n\nRPKR QMWJZZKRG WYMABY\nINGY PZBZIE XROZA\nOPK RNQV SA ENMPL\nXVZIZ GBHV ERIQIF",
+          "plaintext": "A letter shift a cipher makes\n a famous Roman's name it takes [Caesar]\nA shift of two you now can break\n but other moves a code can make [shift]\nHowever they be swapped about\n a Kufa man could find them out [al-Kindi]\nWhen different shifts\n each letter takes\nThe name of which\n great code awakes [Vigenere]",
+          "key": "VIGENERE (for the final Vigenere stanza)"
+        }
+      ]
+    },
+    {
+      "letter": "B",
+      "number": 4,
+      "common_name": "Scytale",
+      "total_height_mm": 1887,
+      "extension_above_ring_mm": 178,
+      "fiducial_separation_mm": 116,
+      "fiducial_direction": "north-east",
+      "traversal_code": "CFEC",
+      "ring_cipher": {
+        "grid_size": "26x5",
+        "height_mm": 1709,
+        "endpoint": "below_fiducial",
+        "start_row": "top"
+      },
+      "ciphers": [
+        {
+          "position": "ring",
+          "name": "Semaphore (Chappe)",
+          "status": "SOLVED",
+          "type": "Chappe semaphore with angle pairs",
+          "ciphertext": "65 45 32 33 42 46 64 64 21 66 46 32 34 64 51 42 31 12 66 33 43 65 33 66 11 51\n64 12 64 64 33 42 33 66 32 55 66 41 46 45 33 13 12 64 56 45 34 13 26 66 36 26\n45 51 64 64 36 51 66 46 64 51 51 66 41 64 32 34 66 42 31 13 45 33 66 34 34 26\n12 64 45 31 26 51 11 66 33 12 12 31 66 51 11 42 33 12 31 42 64 46 42 26 55 11\n45 24 56 12 64 46 66 31 12 51 66 51 26 33 45 31 41 64 33 43 64 55 42 46 32 33",
+          "plaintext_summary": "Poem about French optical telegraph (\"code that flowed from gay Paris...\")",
+          "attribution": "Bob Dovenberg",
+          "plaintext": "Code that flowed from gay Paris\n a message plain for all to see\n now demands a stronger key\nImproved by time in dribs and drabs\n three prime examples in dark crabs",
+          "description": "Chappe semaphore system. Each symbol transcribed as a number pair representing arm angles (45, 90, 135, 225, 270, 315 degrees)."
+        },
+        {
+          "position": "lower",
+          "name": "Scytale",
+          "status": "SOLVED",
+          "type": "Scytale wrapped on hexagonal baton",
+          "ciphertext": "AGPSHALHALIECNREWTOCTPUWS\nMEOLOLOADOEEEOSAAHVHEERIP\nEHNAWLSVMFNCRFICCAESRDENA\nSIHVNBEEIATETAAEOTDMHEHFR\nSDIETYRARNGUAPNSDPMAENIOT\nAUSSOCSNACRNIEPAERURLSSRA",
+          "plaintext_summary": "Poem about Histiaeus and Lysander of Sparta",
+          "attribution": "skintigh",
+          "plaintext": "A message hid upon his slave\n shown to all by closer shave\nAn admiral of ancient Greece\n uncertain of a Persian peace\nSaw a code that proved much smarter\n helped ensure his win for Sparta",
+          "description": "Scytale wrapped around a hexagonal baton. References Histiaeus (message tattooed on slave's head) and Lysander of Sparta (scytale message, 404 BC)."
+        }
+      ]
+    },
+    {
+      "letter": "C",
+      "number": 6,
+      "common_name": "Enigma",
+      "total_height_mm": 2153,
+      "extension_above_ring_mm": 444,
+      "fiducial_separation_mm": 354,
+      "fiducial_direction": "north-east",
+      "traversal_code": "FHIG",
+      "ring_cipher": {
+        "grid_size": "26x5",
+        "height_mm": 1709,
+        "endpoint": "opposite_fiducial",
+        "start_row": "top"
+      },
+      "ciphers": [
+        {
+          "position": "ring",
+          "name": "Binary",
+          "status": "SOLVED",
+          "type": "Binary (dash=1, dot=0), 2x3 arrays",
+          "plaintext_summary": "Names of telegraph/wireless pioneers (Branly, Braun, Cooke, Faraday, Gauss, Henry, Hertz, Marconi, Morse, etc.)",
+          "attribution": "Glenn McIntosh",
+          "plaintext": "Branly, Braun, Campillo, Cooke, DeMoura, Dyar, Faraday, Gauss, Henry, Hertz, Marconi, Morse, Rutherford, Schilling, Soemmering, Sturgeon, Tesla, Vail, Weber, Wheatstone"
+        },
+        {
+          "position": "lower",
+          "name": "Rotor",
+          "status": "UNSOLVED",
+          "type": "Enigma-like rotor machine",
+          "ciphertext_line_1": "BIOB AXQC NLPA MNXE SBNT FJLD DL",
+          "ciphertext_line_2": "JAWS FDHD MATX EJHM PVUJ XJOM KH",
+          "total_characters": 52,
+          "attempts_summary": "Single-key 26^4 brute force, 12+ rotor advancement schemes, L1/L2 group pairings, beam search, traversal codes as keys - all rejected.",
+          "note": "Cannot be cracked from pillar data alone. Needs cross-pillar information.",
+          "ciphertext": "BIOB AXQC NLPA MNXE SBNT FJLD DL\nJAWS FDHD MATX EJHM PVUJ XJOM KH"
+        }
+      ]
+    },
+    {
+      "letter": "D",
+      "number": 2,
+      "common_name": "Cogs",
+      "total_height_mm": 2347,
+      "extension_above_ring_mm": 638,
+      "fiducial_separation_mm": 571,
+      "fiducial_direction": "south-west",
+      "traversal_code": "HWCJ",
+      "ring_cipher": {
+        "grid_size": "26x5",
+        "height_mm": 1709,
+        "endpoint": "below_fiducial",
+        "start_row": "bottom"
+      },
+      "ciphers": [
+        {
+          "position": "ring",
+          "name": "Pigpen",
+          "status": "SOLVED",
+          "type": "Pigpen cipher, German text, RTL lines upside-down",
+          "plaintext_summary": "Queen of the Night aria from Mozart's Die Zauberfloete, ending \"123\"",
+          "note": "Pigpen = Freemason cipher; Magic Flute has Masonic motifs; \"123\" may reference the three opening chords (Eb minor, C minor, Eb major), three Masonic pillars, or three veiled ladies",
+          "attribution": "Bob Dovenberg",
+          "ciphertext": "LUCKVERURCHSIEGINGALLMEING\nIENEROLDRIMTELHEFRETHCSOBN\nHTUSERKORENDENNMEINETOEWIC\nNEAHCINIBESHCONRHITIMHOLFT\nZUMLEIDENHICHSIEZITTERN123",
+          "plaintext": "Zum Leiden bin ich auserkoren\n Denn meine Tochter fehlet mir;\nDurch sie ging all mein Gluck verloren\n Ein Bosewicht entfloh mit ihr\nNoch seh ich sie zittern.\n 1 2 3\n\n(I am chosen for suffering,\n for my daughter is gone from me;\nThrough her all my happiness has been lost,\n a villain fled with her\nI can still see her trembling. 1 2 3)",
+          "description": "Pigpen cipher in German. The plaintext is the Queen of the Night aria from Mozart's Die Zauberfloete. Pigpen was commonly used by the Freemasons, and the opera contains rationalist Freemason motifs."
+        },
+        {
+          "position": "lower",
+          "name": "Cogs",
+          "status": "UNSOLVED",
+          "type": "71 cog-shaped glyphs across 7 columns (16/10/9/10/10/7/9)",
+          "variables": [
+            "tooth count",
+            "number of tooth sets (2/3/4)",
+            "dot angle",
+            "internal dots"
+          ],
+          "mesh_compatibility_groups": {
+            "total": 43,
+            "by_column": {
+              "Col1": "A|BCD|E|F|G|HIJK|L|MNO|P (9 groups, 16 cogs)",
+              "Col2": "A|BC|DEFGH|I|J (5 groups, 10 cogs)",
+              "Col3": "AB|C|D|E|FG|H|I (7 groups, 9 cogs)",
+              "Col4": "ABCD|EF|G|H|I|J (6 groups, 10 cogs)",
+              "Col5": "AB|C|DE|FGHIJ (4 groups, 10 cogs)",
+              "Col6": "A|B|CD|E|FG (5 groups, 7 cogs)",
+              "Col7": "A|B|C|D|E|FG|HI (7 groups, 9 cogs)"
+            }
+          },
+          "attempts_summary": "Direct substitution, angle mapping, Polybius, Vigenere/Beaufort with 80+ keys, Friedman analysis - all rejected. Multi-channel encoding likely.",
+          "mesh_groups": [
+            {
+              "column": 1,
+              "cog_count": 16,
+              "group_count": 9,
+              "pattern": "A | BCD | E | F | G | HIJK | L | MNO | P"
+            },
+            {
+              "column": 2,
+              "cog_count": 10,
+              "group_count": 5,
+              "pattern": "A | BC | DEFGH | I | J"
+            },
+            {
+              "column": 3,
+              "cog_count": 9,
+              "group_count": 7,
+              "pattern": "AB | C | D | E | FG | H | I"
+            },
+            {
+              "column": 4,
+              "cog_count": 10,
+              "group_count": 6,
+              "pattern": "ABCD | EF | G | H | I | J"
+            },
+            {
+              "column": 5,
+              "cog_count": 10,
+              "group_count": 4,
+              "pattern": "AB | C | DE | FGHIJ"
+            },
+            {
+              "column": 6,
+              "cog_count": 7,
+              "group_count": 5,
+              "pattern": "A | B | CD | E | FG"
+            },
+            {
+              "column": 7,
+              "cog_count": 9,
+              "group_count": 7,
+              "pattern": "A | B | C | D | E | FG | HI"
+            }
+          ],
+          "description": "71 cog-shaped glyphs across 7 columns. Each cog has 2-4 sets of teeth, a dot angle, and internal dots. Adjacent cogs in a column either mesh (teeth interleave) or clash. 43 mesh-compatibility groups identified."
+        }
+      ]
+    },
+    {
+      "letter": "E",
+      "number": 8,
+      "common_name": "Bubbles/Braille",
+      "total_height_mm": 2393,
+      "extension_above_ring_mm": 684,
+      "fiducial_separation_mm": 628,
+      "fiducial_direction": "south-east",
+      "traversal_code": "EFCF",
+      "ring_cipher": {
+        "grid_size": "26x5",
+        "height_mm": 1709,
+        "endpoint": "opposite_fiducial",
+        "start_row": "top"
+      },
+      "ciphers": [
+        {
+          "position": "ring",
+          "name": "Braille",
+          "status": "SOLVED",
+          "type": "Braille cipher, RTL lines upside-down",
+          "plaintext_summary": "Poem about Napoleon, Barbier, and Braille",
+          "attribution": "Bob Dovenberg",
+          "plaintext": "A short-sighted general with buses to park [Napoleon]\n an old French Barber sitting quite in the dark [Barbier]\nTip of a finger, glide of a snail [Braille]\n all our great works on the head of a nail.",
+          "description": "Braille cipher with right-to-left lines upside-down. References Napoleon, Barbier (night writing), and Louis Braille."
+        },
+        {
+          "position": "lower",
+          "name": "Rail fence",
+          "status": "SOLVED",
+          "type": "Rail fence transposition cipher",
+          "plaintext_summary": "Poem about Alberti, Trithemius, and Rossignol",
+          "attribution": "Matthew Bienik",
+          "plaintext": "A simple code to hide your tails\n it's letters nailed to different rails [rail fence cipher]\nA famous scholar from times past\n with copper discs encoded fast [Alberti]\nA German monk with codes so strong\n used keys to shift the cipher on [Trithemius]\nA family down the mountainside\n a cabinet noir they worked inside [Rossignol]"
+        }
+      ]
+    },
+    {
+      "letter": "F",
+      "number": 3,
+      "common_name": "Hexstars/DNA",
+      "total_height_mm": 2379,
+      "extension_above_ring_mm": 670,
+      "fiducial_separation_mm": 636,
+      "fiducial_direction": "north-west",
+      "traversal_code": "CMBH",
+      "ring_cipher": {
+        "grid_size": "26x5",
+        "height_mm": 1709,
+        "endpoint": "opposite_fiducial",
+        "start_row": "top"
+      },
+      "ciphers": [
+        {
+          "position": "ring",
+          "name": "DNA codons",
+          "status": "SOLVED",
+          "type": "DNA 3-letter codons mapped to amino acid single-letter codes",
+          "plaintext": "Far sighted lady, we may spawn a repainted thylacine",
+          "note": "May reference conservation geneticist Karen Firestone and thylacine DNA recovery",
+          "attribution": "Bob Dovenberg",
+          "ciphertext": "TTC GCA CGA TCG ATC GGT CAT ACG GAG GAC CTG GCA GAC TAC TGG GAG ATG GCA TAC TCG CCG GCA TGG AAC GCA CGA GAG CCG GCA ATC AAC ACG GAG GAC ACG CAT TAC CTG GCA TGC ATC AAC GAG",
+          "description": "DNA 3-letter codons mapped to amino acid single-letter codes. May reference conservation geneticist Karen Firestone and the Australian Museum thylacine DNA recovery project."
+        },
+        {
+          "position": "lower",
+          "name": "Astroids",
+          "status": "UNSOLVED",
+          "type": "Four-pointed star glyphs (U+2726) in 42 columns with irregular vertical spacing",
+          "total_astroids": 369,
+          "count_per_column": [
+            4,
+            4,
+            18,
+            6,
+            4,
+            10,
+            3,
+            13,
+            4,
+            13,
+            8,
+            12,
+            4,
+            4,
+            3,
+            12,
+            9,
+            11,
+            9,
+            8,
+            12,
+            4,
+            10,
+            10,
+            13,
+            16,
+            11,
+            14,
+            7,
+            12,
+            6,
+            4,
+            6,
+            3,
+            11,
+            6,
+            16,
+            15,
+            6,
+            8,
+            12,
+            8
+          ],
+          "mean_per_column": 8.79,
+          "range": "3-18",
+          "source": "Canonical SVG with 369 astroids",
+          "conjecture": "May represent light spectra (stars or elements)",
+          "attempts_summary": "Count-to-letter, Polybius pairs, y-position mapping, binary grid, spectral matching (H, He, Li, Na etc.), music/constellation mapping - all rejected. Likely needs cross-pillar key from paired pillar G.",
+          "astroid_counts": "[4, 4, 18, 6, 4, 10, 3, 13, 4, 13, 8, 12, 4, 4, 3, 12, 9, 11, 9, 8, 12, 4, 10, 10, 13, 16, 11, 14, 7, 12, 6, 4, 6, 3, 11, 6, 16, 15, 6, 8, 12, 8]"
+        }
+      ]
+    },
+    {
+      "letter": "G",
+      "number": 5,
+      "common_name": "Squircles",
+      "total_height_mm": 2432,
+      "extension_above_ring_mm": 723,
+      "fiducial_separation_mm": 655,
+      "fiducial_direction": "south-east",
+      "traversal_code": "unknown",
+      "ring_cipher": {
+        "grid_size": "26x5",
+        "height_mm": 1709,
+        "endpoint": "unknown",
+        "start_row": "unknown"
+      },
+      "ciphers": [
+        {
+          "position": "ring",
+          "name": "Squircles",
+          "status": "UNSOLVED",
+          "type": "10x26 grid of 4-orientation petal/cam shapes (encoded 0-3)",
+          "grid_data": {
+            "rows": 10,
+            "cols": 26,
+            "data": [
+              "01110011011101021231331012",
+              "02030013322303333000200032",
+              "21221133103032320102000132",
+              "23123002121223001301131123",
+              "10103100010101201201221103",
+              "30212131033000203011112330",
+              "30101111212032132012210133",
+              "13303323023120222333322012",
+              "00000101022001203231310031",
+              "30110333202120112302112123"
+            ]
+          },
+          "creator_hint": "Vertical pairs form 26x5 labyrinth grid; 4 squircles per plaintext letter (codon-like); approximately 65 letters of plaintext",
+          "best_reading": "Pair-boustrophedon odd start gives 50 distinct 4-cell codons; pattern (1,3,0,3) appears 8 times (12.3% matches English E)",
+          "attempts_summary": "All simple substitutions, Vigenere, Bifid, Hill, autokey, running-key with solved poems, SA on homophonic - all rejected. 44 of 65 positions are singletons = too many free variables for frequency attack.",
+          "grid": "01110011011101021231331012\n02030013322303333000200032\n21221133103032320102000132\n23123002121223001301131123\n10103100010101201201221103\n30212131033000203011112330\n30101111212032132012210133\n13303323023120222333322012\n00000101022001203231310031\n30110333202120112302112123",
+          "description": "10x26 grid of 4-orientation petal/cam shapes (encoded 0-3). Creator hint (Kohlhagen via Schmeh): vertical pairs form a 26x5 labyrinth grid; 4 squircles per plaintext letter (codon-like redundancy); approximately 65 letters of plaintext. Best reading config: pair-boustrophedon with odd start column gives 50 distinct 4-cell codons. Pattern (1,3,0,3) appears 8 times (12.3%), matching English E frequency (12.7%)."
+        },
+        {
+          "position": "lower",
+          "name": "Waveform/Helix",
+          "status": "UNSOLVED",
+          "type": "515 characters in double-helix visual layout",
+          "ciphertext": "UWGHTLIYCOEYDY\nRFKVOACMHPUCEAL\nBANYUJHEESHABPS\nNAYIDQGILTIVKTE\nFAESOKTMZQDMRGH\nHYLHNICNLBNWWXX\nKGAPYHIIQHSKETZ\nRRENUCMTVUINLZR\nICYRFFGTKDNBQSH\nNLXZWKMVCICTCDD\nZAOWRSUNVMDOIXG\nZCCFCUEAKAKFSMP\nYRHUUTMCYSSMPFG\nTUCIESREQXAICHL\nLYVBKNNZVBPKNQA\nEXQSHOSGVZDHDFM\nHYPHCUDQTMWVNEK\nNGACBGTSACXEHRE\nDUUHNQVDATWTIEK\nZRFHTOFRUPTKHNP\nXYNFBBHWPVSSKIN\nNOHYWLJQZKWRSQO\nUIEEQKYEMPRQEDM\nIVSVAPNGKDVPQME\nXGCIOAVXVIGTPIQ\nORDQRJEKWFPVWZP\nECYNYRCGWWIFCYX\nGVLGPLBSJGMIJCX\nRHYEOHHWTXOAGYS\nFSDOZGZJGNPTRUA\nESTRPYFTJVZQHOP\nEQLOQRGPHPKEDEI\nIQHCZYWPJZKAZQA\nKSKMIPLDRGCWCAD\nGZCDBB",
+          "total_characters": 515,
+          "ic": 1.014,
+          "chi_squared_vs_english": 2205,
+          "note": "IC flat; definitively not simple substitution. Lines offset like a double-helix projection; sine wave freq approximately 0.75 rad/line",
+          "layout": "Double-helix projection with sinusoidal offset",
+          "description": "515 characters in double-helix visual layout. Lines offset like a plane projection of a double helix. Sine wave frequency approximately 0.75 radians per line, with line endings lagging by a quarter circle. IC = 1.014 (flat); chi-squared vs English = 2205. Definitively not simple substitution or transposition."
+        }
+      ]
+    },
+    {
+      "letter": "H",
+      "number": 1,
+      "common_name": "Title/Labyrinth/PVL",
+      "total_height_mm": 2569,
+      "extension_above_ring_mm": 860,
+      "fiducial_separation_mm": 786,
+      "fiducial_direction": "north-west",
+      "traversal_code": "SMOU",
+      "ring_cipher": {
+        "grid_size": "26x5",
+        "height_mm": 1709,
+        "endpoint": "below_fiducial",
+        "start_row": "top"
+      },
+      "ciphers": [
+        {
+          "position": "ring",
+          "name": "Labyrinth",
+          "status": "SOLVED",
+          "type": "Direct labyrinth cipher",
+          "plaintext": "A labyrinth stands before you\n and is but one of eight\nMark all the twists and turns\n for patterns they create\nThat one by one step through\n the enigmas that await",
+          "attribution": "Glenn McIntosh",
+          "ciphertext": "ALABYRINTHSTANDSBEHATAWAIT\nEHTHGUORHTPEOYEROFTSAMGINE\nATONEBYONESTUATHEYCREATETH\nIEFOENOTUBSIDNSNRETTRAMTHG\nETWISTSANDTURNSFORPAKALLTH"
+        },
+        {
+          "position": "title",
+          "name": "NKRYPT",
+          "status": "SOLVED (trivial)",
+          "type": "Title inscription"
+        },
+        {
+          "position": "upper",
+          "name": "PVL",
+          "status": "UNSOLVED (FINAL PUZZLE)",
+          "type": "26x10 letter grid above ring cipher. Letters P, V, L in larger font.",
+          "grid": "OXPUWAOEKZVCRLUYFMLXTPNATW\nVGZTCGVGDAAXFDKOCRFRUOKAPW\nLCMPTFPBTYXRSZKKQUBJAMHYUL\nMZVSXXZHDLYHOKWWEJUXLXKRZU\nPPESLBOEKOGRTAYDFOHRHVMPBN\nDTEZBTYDXNMPXHVNKCIYEMJFVE\nMNKDIQBOSUFFFWBVDNKHRTLIMZ\nWRRQUFNNBGKUWNQCHDEFSTZZRQ\nUIUDPTKGATPSJIFXXGGSNTWJLA\nBRYVUCSBNPYAVSTTONZFWIUUNW",
+          "note": "Likely requires combined keys from all other ciphers. Frequency distribution is flat (not simple substitution)."
+        }
+      ]
+    }
+  ],
+  "ring_ciphers": {
+    "description": "All 8 pillars carry a 26x5 letter/symbol grid at the same height (1709mm). Read in labyrinth (boustrophedon) pattern.",
+    "traversal_pattern": "Row 1 LTR, Row 2 RTL, Row 3 LTR, Row 4 RTL, Row 5 LTR. One down and one up transition between each row pair.",
+    "traversal_codes": {
+      "A": "DNOI",
+      "B": "CFEC",
+      "C": "FHIG",
+      "D": "HWCJ",
+      "E": "EFCF",
+      "F": "CMBH",
+      "G": "unknown",
+      "H": "SMOU"
+    },
+    "endpoints": {
+      "below_fiducial": [
+        "A",
+        "B",
+        "D",
+        "H"
+      ],
+      "opposite_fiducial": [
+        "C",
+        "E",
+        "F"
+      ],
+      "start_top_row": [
+        "A",
+        "B",
+        "C",
+        "E",
+        "F",
+        "H"
+      ],
+      "start_bottom_row": [
+        "D"
+      ]
+    }
+  },
+  "pairings": {
+    "source": "Kohlhagen template (NKRYPT-whole-614.png) shared with Schmeh/Dunin 2022",
+    "insight": "Ring ciphers at uniform 1709mm height. Pillar height variation = extension above ring. Lower ciphers cluster into pairs by effective extent.",
+    "pairs": [
+      {
+        "pillars": [
+          "C",
+          "A"
+        ],
+        "relationship": "Tightest pair, same group on both upper and lower channels",
+        "attack": "A's Caesar/geospatial solutions may key C's rotor"
+      },
+      {
+        "pillars": [
+          "H",
+          "B"
+        ],
+        "relationship": "Compact upper, sparse lower",
+        "attack": "B's semaphore/scytale solutions feed H's labyrinth/PVL"
+      },
+      {
+        "pillars": [
+          "G",
+          "F"
+        ],
+        "relationship": "Long lower ciphers",
+        "attack": "F's DNA solution may key G's waveform"
+      },
+      {
+        "pillars": [
+          "E",
+          "D"
+        ],
+        "relationship": "Mid lower, both pictographic",
+        "attack": "E's railfence/braille solutions may shift D's cogs decoding"
+      }
+    ]
+  },
+  "constellation": {
+    "status": "Working hypothesis",
+    "hypothesis": "Pillars B,G,F,C,D form the Southern Cross (Crux). Pillars A,E,H are Alpha/Beta/Omega Centauri.",
+    "thematic_basis": "Centaurus constellation adjacent to Crux; 'Centenary'/'Centaurus' wordplay for Canberra's 1913-2013 centenary.",
+    "geometric_note": "Procrustes fit best subset is {C,E,F,G,H} at norm 0.449, but BGFCD chosen on thematic grounds.",
+    "cribs_to_try": [
+      "CRUX",
+      "SOUTHERNCROSS",
+      "ALPHACENTAURI",
+      "OMEGACENTAURI",
+      "CENTAURUS",
+      "CENTENARY",
+      "RIGILKENTAURUS"
+    ]
+  },
+  "base_code": {
+    "description": "15 autosomal STR loci per pillar base, matching PowerPlex 16 HS forensic DNA profiling.",
+    "loci_order": [
+      "CSF1PO",
+      "D13S317",
+      "D16S539",
+      "D18S51",
+      "D21S11",
+      "D3S1358",
+      "D5S818",
+      "D7S820",
+      "D8S1179",
+      "FGA",
+      "PentaD",
+      "PentaE",
+      "TH01",
+      "TPOX",
+      "vWA"
+    ],
+    "profiles": {
+      "H": [
+        "10/12",
+        "11/12",
+        "11/11",
+        "14/17",
+        "30/30",
+        "16/18",
+        "11/12",
+        "10/10",
+        "10/14",
+        "19/24",
+        "12/12",
+        "12/13",
+        "7/9",
+        "8/11",
+        "14/14"
+      ],
+      "D": [
+        "10/11",
+        "9/14",
+        "12/13",
+        "15/17",
+        "28/30",
+        "17/17",
+        "11/11",
+        "8/12",
+        "13/15",
+        "22/24",
+        "9/13",
+        "11/11",
+        "9.3/10",
+        "8/11",
+        "14/17"
+      ],
+      "F": [
+        "10/12",
+        "12/14",
+        "11/12",
+        "14/15",
+        "28/30",
+        "16/17",
+        "11/11",
+        "8/10",
+        "10/15",
+        "19/24",
+        "9/12",
+        "11/13",
+        "9/9.3",
+        "8/8",
+        "14/17"
+      ],
+      "B": [
+        "10/10",
+        "9/12",
+        "11/13",
+        "15/17",
+        "28/30",
+        "17/18",
+        "11/12",
+        "8/10",
+        "14/15",
+        "22/24",
+        "12/13",
+        "11/12",
+        "7/10",
+        "8/11",
+        "14/17"
+      ],
+      "G": [
+        "11/12",
+        "9/12",
+        "11/13",
+        "15/17",
+        "28/30",
+        "17/18",
+        "11/11",
+        "10/12",
+        "13/14",
+        "19/24",
+        "12/13",
+        "11/12",
+        "7/9.3",
+        "8/11",
+        "14/17"
+      ],
+      "C": [
+        "10/10",
+        "11/12",
+        "11/13",
+        "14/15",
+        "30/30",
+        "17/18",
+        "12/12",
+        "8/10",
+        "14/14",
+        "19/22",
+        "12/12",
+        "11/13",
+        "7/7",
+        "8/8",
+        "14/17"
+      ],
+      "A": [
+        "10/11",
+        "9/11",
+        "9/12",
+        "13/17",
+        "28/29",
+        "15/17",
+        "11/12",
+        "11/12",
+        "11/13",
+        "20/24",
+        "9/13",
+        "11/11",
+        "7/9.3",
+        "11/11",
+        "14/17"
+      ],
+      "E": [
+        "10/11",
+        "12/14",
+        "11/13",
+        "15/22",
+        "28/30",
+        "16/17",
+        "11/13",
+        "8/10",
+        "12/15",
+        "22/22",
+        "10/13",
+        "11/13",
+        "9/10",
+        "8/8",
+        "16/17"
+      ]
+    },
+    "conjectured_parents": [
+      "AE->D",
+      "HD->F",
+      "HD->G",
+      "HD->B or HB->C"
+    ],
+    "population": "European/Asian origin probable"
+  },
+  "tweet": {
+    "date": "4 March 2013",
+    "sender": "Senator Kate Lundy",
+    "ciphertext": "hdxjnfjxzjezthdbmmwqzjturogoucrfruohhzmlqpmbkuykkcrnkdlndlxjnidihjihqkwdpci",
+    "length": 75,
+    "partial_solution": {
+      "positions": "59-74 (last 16 chars)",
+      "key": "SWYQ",
+      "plaintext": "thecentenarycode",
+      "note": "SWYQ = ROT13(FJLD), where FJLD is the 6th group of rotor ciphertext line 1"
+    },
+    "unsolved": "First 59 characters",
+    "photo_rotor_setting": "CYWE (from opening day photograph)"
+  },
+  "rotor_machine": {
+    "description": "Four movable rotors plus fixed reflector, analogous to Enigma but with manual advancement.",
+    "wirings": {
+      "rotor1": {
+        "plain": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "cipher": "UDBCFGEJHILMKTSNOPQRWXYZAV"
+      },
+      "rotor2": {
+        "plain": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "cipher": "BZCXWHIFGLMJKVUPSQRTONEDYA"
+      },
+      "rotor3": {
+        "plain": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "cipher": "ZADEFGCHMIJKLOPQRNWSTUVBXY"
+      },
+      "rotor4": {
+        "plain": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "cipher": "BDFCEGIJKLSMAZNHOPQRTVXUWY"
+      },
+      "reflector": {
+        "plain": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "cipher": "ZYVMLIHGFKJEDURQPOTSNCXWBA"
+      }
+    },
+    "key_format": "4-letter string setting offsets for rotors 1-4",
+    "involutive": true,
+    "advancement": "Manual (encoder chooses stepping sequence; no automatic odometer)"
+  }
+}

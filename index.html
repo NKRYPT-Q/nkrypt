@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NKRYPT - Canonical Reference</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NKRYPT cryptographic sculpture - comprehensive reference site with all cipher data, solutions, and analysis.">
+<style>
+:root {
+  --bg: #0e1014; --bg-card: #161a21; --bg-card-2: #1c222b;
+  --fg: #e8eaed; --fg-dim: #9aa0a6; --accent: #ffb547; --accent-2: #6ec1ff;
+  --border: #2a313c; --good: #4caf50; --warn: #ffb547; --bad: #ef5350;
+  --info: #6ec1ff; --final: #b58aff;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { margin:0; padding:0; background:var(--bg); color:var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height:1.6; }
+a { color:var(--accent-2); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code, pre { font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace; }
+pre { background:var(--bg-card-2); padding:12px; border-radius:6px; overflow-x:auto; font-size:12px; white-space:pre-wrap; }
+code { background:var(--bg-card-2); padding:1px 5px; border-radius:3px; font-size:12px; }
+.layout { display:grid; grid-template-columns:260px 1fr; min-height:100vh; }
+@media (max-width:800px) { .layout { grid-template-columns:1fr; } nav.sidebar { display:none; } }
+nav.sidebar { background:var(--bg-card); border-right:1px solid var(--border);
+  padding:20px 16px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+nav.sidebar h1 { font-size:20px; margin:0 0 4px 0; color:var(--accent); letter-spacing:0.15em; }
+nav.sidebar .subtitle { font-size:11px; color:var(--fg-dim); margin-bottom:18px; }
+nav.sidebar ul { list-style:none; padding:0; margin:0 0 12px 0; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a { color:var(--fg); display:block; padding:4px 8px; border-radius:4px; font-size:12px; transition:background 0.15s; }
+nav.sidebar a:hover { background:var(--bg-card-2); text-decoration:none; }
+nav.sidebar a.solved { opacity:0.6; }
+nav.sidebar .group-label { font-size:10px; text-transform:uppercase; letter-spacing:0.08em;
+  color:var(--fg-dim); margin:14px 0 4px 8px; font-weight:600; }
+main { padding:28px 36px; max-width:1200px; }
+@media (max-width:800px) { main { padding:16px; } }
+section.page { margin-bottom:60px; padding-bottom:28px; border-bottom:1px dashed var(--border); }
+section.page:last-child { border-bottom:none; }
+h1.page-title { font-size:26px; margin:0 0 6px 0; color:var(--accent); }
+h2 { color:var(--accent-2); font-size:18px; margin:24px 0 8px 0; }
+h3 { color:var(--fg); font-size:15px; margin:18px 0 6px 0; }
+.page-subtitle { color:var(--fg-dim); font-size:13px; margin-bottom:18px; }
+.pillar-meta { margin-bottom:20px; }
+.pillar-meta table { width:100%; max-width:700px; font-size:13px; border-collapse:collapse; }
+.pillar-meta th, .pillar-meta td { text-align:left; padding:5px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+.pillar-meta th { color:var(--fg-dim); font-weight:500; width:35%; }
+.cipher-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px;
+  padding:16px 20px; margin:16px 0; }
+.cipher-card h3 { margin:0 0 6px 0; font-size:16px; }
+.badge { display:inline-block; padding:2px 8px; font-size:11px; border-radius:10px;
+  font-weight:600; letter-spacing:0.02em; margin-left:8px; vertical-align:middle; }
+.badge.solved { background:var(--good); color:#fff; }
+.badge.active { background:var(--warn); color:#2a1a00; }
+.badge.blocked { background:var(--bad); color:#fff; }
+.badge.untested { background:#555; color:#fff; }
+.badge.final { background:var(--final); color:#fff; }
+.ciphertype { color:var(--fg-dim); font-size:12px; margin:-2px 0 8px 0; }
+.ciphertext { font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px;
+  background:var(--bg-card-2); padding:10px 12px; border-radius:4px; overflow-x:auto; white-space:pre; line-height:1.5; }
+.poem { background:var(--bg-card-2); border-left:3px solid var(--accent-2);
+  padding:10px 14px; margin:10px 0; font-style:italic; white-space:pre-wrap; font-size:13px; }
+.conjecture { background:rgba(110,193,255,0.06); border-left:3px solid var(--info);
+  padding:10px 14px; margin:8px 0; font-size:13px; border-radius:4px; }
+.attempts { background:var(--bg-card-2); padding:10px 14px; border-radius:4px; font-size:12px; white-space:pre-wrap; line-height:1.5; }
+.attribution { font-size:11px; color:var(--fg-dim); margin:6px 0 0 0; font-style:italic; }
+table.canon { width:100%; border-collapse:collapse; font-size:13px; margin:12px 0; }
+table.canon th, table.canon td { padding:6px 10px; border-bottom:1px solid var(--border); text-align:left; }
+table.canon th { color:var(--fg-dim); font-weight:500; background:var(--bg-card-2); }
+table.canon tr:hover td { background:var(--bg-card-2); }
+.stat-row { display:flex; gap:8px; flex-wrap:wrap; margin:8px 0; }
+.stat { background:var(--bg-card-2); padding:6px 10px; border-radius:4px; font-size:12px; }
+.stat .label { color:var(--fg-dim); margin-right:4px; }
+.stat .val { color:var(--fg); font-weight:500; }
+details { margin:8px 0; }
+summary { cursor:pointer; color:var(--accent-2); font-size:13px; }
+.plaque { background:var(--bg-card-2); border-left:3px solid var(--accent); padding:14px 18px;
+  font-style:italic; white-space:pre-wrap; font-size:13px; }
+.svg-container { margin:16px 0; overflow-x:auto; }
+.footer { font-size:11px; color:var(--fg-dim); margin-top:40px; padding-top:14px;
+  border-top:1px solid var(--border); }
+.toc-status { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+.toc-status.green { background:var(--good); }
+.toc-status.red { background:var(--bad); }
+.toc-status.orange { background:var(--warn); }
+.toc-status.purple { background:var(--final); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:800px) { .grid-2 { grid-template-columns:1fr; } }
+.key-insight { background:rgba(255,181,71,0.08); border-left:3px solid var(--accent);
+  padding:10px 14px; margin:12px 0; border-radius:4px; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+<h1>NKRYPT</h1>
+<div class="subtitle">Canonical Reference Site</div>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#structure">Physical Structure</a></li>
+<li><a href="#labyrinth">Ring Cipher System</a></li>
+</ul>
+<div class="group-label">Pillars</div>
+<ul>
+<li><a href="#pillar-A"><span class="toc-status green"></span>A / #7 &middot; Caesar</a></li>
+<li><a href="#pillar-B"><span class="toc-status green"></span>B / #4 &middot; Scytale</a></li>
+<li><a href="#pillar-C"><span class="toc-status green"></span>C / #6 &middot; Enigma</a></li>
+<li><a href="#pillar-D"><span class="toc-status green"></span>D / #2 &middot; Cogs</a></li>
+<li><a href="#pillar-E"><span class="toc-status green"></span>E / #8 &middot; Bubbles/Braille</a></li>
+<li><a href="#pillar-F"><span class="toc-status green"></span>F / #3 &middot; Hexstars/DNA</a></li>
+<li><a href="#pillar-G"><span class="toc-status green"></span>G / #5 &middot; Squircles</a></li>
+<li><a href="#pillar-H"><span class="toc-status green"></span>H / #1 &middot; Title/Labyrinth/PVL</a></li>
+</ul>
+<div class="group-label">Cross-cutting</div>
+<ul>
+<li><a href="#pairings">Pillar Pairings</a></li>
+<li><a href="#structure">Constellation</a></li>
+<li><a href="#rotor-machine">Rotor Machine</a></li>
+<li><a href="#basecode">Base Code DNA</a></li>
+<li><a href="#tweet">Opening Tweet</a></li>
+</ul>
+<div class="group-label">Data</div>
+<ul>
+<li><a href="nkrypt-data.json">Machine-readable JSON</a></li>
+<li><a href="#sources">Sources</a></li>
+</ul>
+</nav>
+<main>
+
+<section class="page" id="overview">
+<h1 class="page-title">NKRYPT</h1>
+<div class="page-subtitle">Eight stainless steel pillars bearing encrypted inscriptions.
+  Questacon, Canberra, Australia. Installed March 2013 for the Centenary of Canberra.
+  Designed by Dr Stuart Kohlhagen PSM (Deputy Director, Questacon).</div>
+
+<div class="plaque">Mystery beyond
+Decipher the veiled meaning
+Renown awaits you
+
+From simple to hard, the key to the last is found in all the rest.
+
+One code within NKRYPT celebrates Canberra&#x27;s Centenary. Be first to decipher it and win a great prize.
+Proudly supported by Mr Eddie Kutner and Mr Leon Kemplar</div>
+
+<h2>Status</h2>
+<div class="stat-row">
+  <div class="stat"><span class="label">Total ciphers:</span><span class="val">19</span></div>
+  <div class="stat"><span class="label">Solved:</span><span class="val">11</span></div>
+  <div class="stat"><span class="label">Unsolved:</span><span class="val">7</span></div>
+  <div class="stat"><span class="label">Partially solved:</span><span class="val">1 (tweet)</span></div>
+</div>
+
+<table class="canon">
+<thead><tr><th>Pillar</th><th>Ring cipher</th><th>Lower cipher</th><th>Extra</th></tr></thead>
+<tbody>
+<tr><td>A / #7 (Caesar)</td><td>Geospatial <span class="badge solved">Solved</span></td><td>Caesar/shift/al-Kindi/Vigenere <span class="badge solved">Solved</span></td><td></td></tr><tr><td>B / #4 (Scytale)</td><td>Semaphore (Chappe) <span class="badge solved">Solved</span></td><td>Scytale <span class="badge solved">Solved</span></td><td></td></tr><tr><td>C / #6 (Enigma)</td><td>Binary <span class="badge solved">Solved</span></td><td>Rotor <span class="badge blocked">Unsolved</span></td><td></td></tr><tr><td>D / #2 (Cogs)</td><td>Pigpen <span class="badge solved">Solved</span></td><td>Cogs <span class="badge blocked">Unsolved</span></td><td></td></tr><tr><td>E / #8 (Bubbles/Braille)</td><td>Braille <span class="badge solved">Solved</span></td><td>Rail fence <span class="badge solved">Solved</span></td><td></td></tr><tr><td>F / #3 (Hexstars/DNA)</td><td>DNA codons <span class="badge solved">Solved</span></td><td>Astroids <span class="badge blocked">Unsolved</span></td><td></td></tr><tr><td>G / #5 (Squircles)</td><td>Squircles <span class="badge blocked">Unsolved</span></td><td>Waveform/Helix <span class="badge blocked">Unsolved</span></td><td></td></tr><tr><td>H / #1 (Title/Labyrinth/PVL)</td><td>Labyrinth <span class="badge solved">Solved</span></td><td>NKRYPT <span class="badge solved">Trivial</span></td><td>PVL <span class="badge final">Final Puzzle</span></td></tr></tbody></table>
+<div class="key-insight">
+<strong>Meta-pattern:</strong> Every solved plaintext describes its own cipher&#x27;s history or technique (self-referential).
+</div>
+
+<h2>Naming conventions</h2>
+<p>Two naming schemes are in common use. The meme.net.au site (Glenn McIntosh) labels pillars A through H
+by fiducial spacing. The dkrypt.org site (Greg Lloyd) numbers them 1 through 8. This site always shows both:
+<code>Pillar A (#7)</code>. The mapping is: A=7, B=4, C=6, D=2, E=8, F=3, G=5, H=1.</p>
+
+<h2>External references</h2>
+<p><a href="https://www.meme.net.au/nkrypt/">meme.net.au/nkrypt</a> (Glenn McIntosh) &mdash; the most comprehensive independent analysis.<br>
+<a href="https://www.dkrypt.org/">dkrypt.org</a> (Greg Lloyd) &mdash; high-resolution photographs and per-pillar pages.<br>
+<a href="https://scienceblogs.de/klausis-krypto-kolumne/">Cipherbrain</a> (Klaus Schmeh) &mdash; multiple articles, including 2022 interview with Kohlhagen.<br>
+<a href="https://www.questacon.edu.au/visiting/galleries/outdoor/exhibits/nkrypt">Questacon official page</a></p>
+</section>
+
+<section class="page" id="structure">
+<h1 class="page-title">Physical Structure</h1>
+<div class="page-subtitle">Heights, fiducials, and the pillar constellation.</div>
+
+<h2>Pillar heights</h2>
+<div class="svg-container"><svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;font-family:monospace;">
+<rect width="600" height="280" rx="8" fill="#0e1117" stroke="#2a313c"/>
+<rect x="60" y="118.53846153846152" width="40" height="131.46153846153848" fill="#6ec1ff44" stroke="#6ec1ff" stroke-width="0.5"/>
+<text x="80" y="264" text-anchor="middle" fill="#e8eaed" font-size="11" font-weight="bold">A</text>
+<text x="80" y="276" text-anchor="middle" fill="#9aa0a6" font-size="8">#7</text>
+<text x="80" y="112.53846153846152" text-anchor="middle" fill="#9aa0a6" font-size="8">1709</text>
+<rect x="120" y="118.53846153846152" width="40" height="131.46153846153848" fill="#6ec1ff44" stroke="#6ec1ff" stroke-width="0.5"/>
+<rect x="120" y="104.84615384615383" width="40" height="13.692307692307693" fill="#ffb54744" stroke="#ffb547" stroke-width="0.5"/>
+<text x="140" y="264" text-anchor="middle" fill="#e8eaed" font-size="11" font-weight="bold">B</text>
+<text x="140" y="276" text-anchor="middle" fill="#9aa0a6" font-size="8">#4</text>
+<text x="140" y="98.84615384615384" text-anchor="middle" fill="#9aa0a6" font-size="8">1887</text>
+<rect x="180" y="118.53846153846152" width="40" height="131.46153846153848" fill="#6ec1ff44" stroke="#6ec1ff" stroke-width="0.5"/>
+<rect x="180" y="84.38461538461536" width="40" height="34.15384615384615" fill="#ffb54744" stroke="#ffb547" stroke-width="0.5"/>
+<text x="200" y="264" text-anchor="middle" fill="#e8eaed" font-size="11" font-weight="bold">C</text>
+<text x="200" y="276" text-anchor="middle" fill="#9aa0a6" font-size="8">#6</text>
+<text x="200" y="78.38461538461539" text-anchor="middle" fill="#9aa0a6" font-size="8">2153</text>
+<rect x="240" y="118.53846153846152" width="40" height="131.46153846153848" fill="#6ec1ff44" stroke="#6ec1ff" stroke-width="0.5"/>
+<rect x="240" y="69.46153846153844" width="40" height="49.07692307692308" fill="#ffb54744" stroke="#ffb547" stroke-width="0.5"/>
+<text x="260" y="264" text-anchor="middle" fill="#e8eaed" font-size="11" font-weight="bold">D</text>
+<text x="260" y="276" text-anchor="middle" fill="#9aa0a6" font-size="8">#2</text>
+<text x="260" y="63.46153846153845" text-anchor="middle" fill="#9aa0a6" font-size="8">2347</text>
+<rect x="300" y="118.53846153846152" width="40" height="131.46153846153848" fill="#6ec1ff44" stroke="#6ec1ff" stroke-width="0.5"/>
+<rect x="300" y="65.9230769230769" width="40" height="52.61538461538462" fill="#ffb54744" stroke="#ffb547" stroke-width="0.5"/>
+<text x="320" y="264" text-anchor="middle" fill="#e8eaed" font-size="11" font-weight="bold">E</text>
+<text x="320" y="276" text-anchor="middle" fill="#9aa0a6" font-size="8">#8</text>
+<text x="320" y="59.923076923076906" text-anchor="middle" fill="#9aa0a6" font-size="8">2393</text>
+<rect x="360" y="118.53846153846152" width="40" height="131.46153846153848" fill="#6ec1ff44" stroke="#6ec1ff" stroke-width="0.5"/>
+<rect x="360" y="66.99999999999997" width="40" height="51.53846153846154" fill="#ffb54744" stroke="#ffb547" stroke-width="0.5"/>
+<text x="380" y="264" text-anchor="middle" fill="#e8eaed" font-size="11" font-weight="bold">F</text>
+<text x="380" y="276" text-anchor="middle" fill="#9aa0a6" font-size="8">#3</text>
+<text x="380" y="61.0" text-anchor="middle" fill="#9aa0a6" font-size="8">2379</text>
+<rect x="420" y="118.53846153846152" width="40" height="131.46153846153848" fill="#6ec1ff44" stroke="#6ec1ff" stroke-width="0.5"/>
+<rect x="420" y="62.9230769230769" width="40" height="55.61538461538462" fill="#ffb54744" stroke="#ffb547" stroke-width="0.5"/>
+<text x="440" y="264" text-anchor="middle" fill="#e8eaed" font-size="11" font-weight="bold">G</text>
+<text x="440" y="276" text-anchor="middle" fill="#9aa0a6" font-size="8">#5</text>
+<text x="440" y="56.923076923076906" text-anchor="middle" fill="#9aa0a6" font-size="8">2432</text>
+<rect x="480" y="118.53846153846152" width="40" height="131.46153846153848" fill="#6ec1ff44" stroke="#6ec1ff" stroke-width="0.5"/>
+<rect x="480" y="52.38461538461536" width="40" height="66.15384615384616" fill="#ffb54744" stroke="#ffb547" stroke-width="0.5"/>
+<text x="500" y="264" text-anchor="middle" fill="#e8eaed" font-size="11" font-weight="bold">H</text>
+<text x="500" y="276" text-anchor="middle" fill="#9aa0a6" font-size="8">#1</text>
+<text x="500" y="46.38461538461539" text-anchor="middle" fill="#9aa0a6" font-size="8">2569</text>
+<line x1="40" y1="118.53846153846152" x2="540" y2="118.53846153846152" stroke="#6ec1ff" stroke-width="1" stroke-dasharray="6,3"/>
+<text x="38" y="122.53846153846152" text-anchor="end" fill="#6ec1ff" font-size="8">Ring 1709mm</text>
+<rect x="420" y="10" width="12" height="12" fill="#6ec1ff44" stroke="#6ec1ff"/>
+<text x="436" y="20" fill="#9aa0a6" font-size="9">Ring cipher zone</text>
+<rect x="420" y="26" width="12" height="12" fill="#ffb54744" stroke="#ffb547"/>
+<text x="436" y="36" fill="#9aa0a6" font-size="9">Extension above ring</text>
+</svg></div>
+
+<p>All ring ciphers sit at exactly <strong>1709 mm</strong> above ground (uniform across all 8 pillars).
+The height variation between pillars is encoded as the <em>extension above the ring</em>. Pillar A (shortest)
+has zero extension; Pillar H (tallest) has 860 mm of extension, occupied by the PVL cipher.</p>
+
+<h3>Three independent measurement channels</h3>
+<table class="canon">
+<thead><tr><th>Pillar</th><th>Total height (mm)</th><th>Extension above ring (mm)</th><th>Fiducial separation (mm)</th><th>Fiducial direction</th></tr></thead>
+<tbody>
+<tr><td>A (#7)</td><td>1709</td><td>0</td><td>0</td><td>south-east</td></tr><tr><td>B (#4)</td><td>1887</td><td>178</td><td>116</td><td>north-east</td></tr><tr><td>C (#6)</td><td>2153</td><td>444</td><td>354</td><td>north-east</td></tr><tr><td>D (#2)</td><td>2347</td><td>638</td><td>571</td><td>south-west</td></tr><tr><td>E (#8)</td><td>2393</td><td>684</td><td>628</td><td>south-east</td></tr><tr><td>F (#3)</td><td>2379</td><td>670</td><td>636</td><td>north-west</td></tr><tr><td>G (#5)</td><td>2432</td><td>723</td><td>655</td><td>south-east</td></tr><tr><td>H (#1)</td><td>2569</td><td>860</td><td>786</td><td>north-west</td></tr>
+</tbody></table>
+<p>All three series (total height, extension, fiducial separation) are monotone in pillar letter (A smallest, H largest).
+They are <em>not</em> the same measurement and must not be conflated.</p>
+
+<h2>Constellation layout</h2>
+<div class="svg-container"><svg viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;font-family:monospace;">
+<rect width="620" height="420" rx="8" fill="#0e1117" stroke="#2a313c"/>
+<line x1="260" y1="140" x2="420" y2="240" stroke="#ffb54733" stroke-width="2" stroke-dasharray="6,4"/>
+<line x1="300" y1="80" x2="180" y2="280" stroke="#ffb54733" stroke-width="2" stroke-dasharray="6,4"/>
+<line x1="340" y1="180" x2="180" y2="280" stroke="#ffb54733" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="340" y1="180" x2="300" y2="80" stroke="#ffb54733" stroke-width="1" stroke-dasharray="4,4"/>
+<circle cx="480" cy="340" r="17" fill="#6ec1ff" opacity="1"/>
+<text x="480" y="370.545" text-anchor="middle" fill="#e8eaed" font-size="12" font-weight="bold">A</text>
+<text x="480" y="382.545" text-anchor="middle" fill="#9aa0a6" font-size="9">#7</text>
+<circle cx="180" cy="280" r="17" fill="#ffb547" opacity="1"/>
+<text x="180" y="311.435" text-anchor="middle" fill="#e8eaed" font-size="12" font-weight="bold">B</text>
+<text x="180" y="323.435" text-anchor="middle" fill="#9aa0a6" font-size="9">#4</text>
+<circle cx="340" cy="180" r="19" fill="#ffb547" opacity="1"/>
+<text x="340" y="212.765" text-anchor="middle" fill="#e8eaed" font-size="12" font-weight="bold">C</text>
+<text x="340" y="224.765" text-anchor="middle" fill="#9aa0a6" font-size="9">#6</text>
+<circle cx="420" cy="240" r="20" fill="#ffb547" opacity="1"/>
+<text x="420" y="273.735" text-anchor="middle" fill="#e8eaed" font-size="12" font-weight="bold">D</text>
+<text x="420" y="285.735" text-anchor="middle" fill="#9aa0a6" font-size="9">#2</text>
+<circle cx="520" cy="200" r="20" fill="#6ec1ff" opacity="1"/>
+<text x="520" y="233.965" text-anchor="middle" fill="#e8eaed" font-size="12" font-weight="bold">E</text>
+<text x="520" y="245.965" text-anchor="middle" fill="#9aa0a6" font-size="9">#8</text>
+<circle cx="260" cy="140" r="20" fill="#ffb547" opacity="1"/>
+<text x="260" y="173.895" text-anchor="middle" fill="#e8eaed" font-size="12" font-weight="bold">F</text>
+<text x="260" y="185.895" text-anchor="middle" fill="#9aa0a6" font-size="9">#3</text>
+<circle cx="300" cy="80" r="20" fill="#ffb547" opacity="1"/>
+<text x="300" y="114.16" text-anchor="middle" fill="#e8eaed" font-size="12" font-weight="bold">G</text>
+<text x="300" y="126.16" text-anchor="middle" fill="#9aa0a6" font-size="9">#5</text>
+<circle cx="140" cy="120" r="21" fill="#6ec1ff" opacity="1"/>
+<text x="140" y="154.845" text-anchor="middle" fill="#e8eaed" font-size="12" font-weight="bold">H</text>
+<text x="140" y="166.845" text-anchor="middle" fill="#9aa0a6" font-size="9">#1</text>
+<text x="10" y="410" fill="#9aa0a6" font-size="10">Gold = Crux hypothesis (B,G,F,C,D) | Blue = Centaurus (A,E,H) | Size = height</text>
+</svg></div>
+<p>The eight pillars are arranged in a constellation pattern when viewed from above. Kohlhagen confirmed (2022, via Schmeh/Dunin)
+that positions and heights encode meaning. Working hypothesis: pillars B, G, F, C, D form the Southern Cross (Crux);
+pillars A, E, H represent Alpha, Beta, and Omega Centauri. The thematic link: Centaurus/Centenary wordplay for Canberra's
+1913-2013 centenary.</p>
+</section>
+
+<section class="page" id="labyrinth">
+<h1 class="page-title">Ring Cipher System</h1>
+<div class="page-subtitle">The labyrinth traversal pattern shared by all eight pillars.</div>
+
+<div class="svg-container"><svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;font-family:monospace;">
+<rect width="600" height="200" rx="8" fill="#0e1117" stroke="#2a313c"/>
+<line x1="80" y1="30" x2="550" y2="30" stroke="#6ec1ff" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="20" y="34" fill="#9aa0a6" font-size="9">Row 1 (LTR)</text>
+<line x1="550" y1="60" x2="80" y2="60" stroke="#ffb547" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="20" y="64" fill="#9aa0a6" font-size="9">Row 2 (RTL)</text>
+<line x1="80" y1="90" x2="550" y2="90" stroke="#6ec1ff" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="20" y="94" fill="#9aa0a6" font-size="9">Row 3 (LTR)</text>
+<line x1="550" y1="120" x2="80" y2="120" stroke="#ffb547" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="20" y="124" fill="#9aa0a6" font-size="9">Row 4 (RTL)</text>
+<line x1="80" y1="150" x2="550" y2="150" stroke="#6ec1ff" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="20" y="154" fill="#9aa0a6" font-size="9">Row 5 (LTR)</text>
+<line x1="300" y1="35" x2="300" y2="55" stroke="#4caf5088" stroke-width="2" stroke-dasharray="4,3"/>
+<text x="305" y="49" fill="#4caf50" font-size="8">T1</text>
+<line x1="400" y1="65" x2="400" y2="85" stroke="#4caf5088" stroke-width="2" stroke-dasharray="4,3"/>
+<text x="405" y="79" fill="#4caf50" font-size="8">T2</text>
+<line x1="300" y1="95" x2="300" y2="115" stroke="#4caf5088" stroke-width="2" stroke-dasharray="4,3"/>
+<text x="305" y="109" fill="#4caf50" font-size="8">T3</text>
+<line x1="400" y1="125" x2="400" y2="145" stroke="#4caf5088" stroke-width="2" stroke-dasharray="4,3"/>
+<text x="405" y="139" fill="#4caf50" font-size="8">T4</text>
+<text x="300" y="185" text-anchor="middle" fill="#9aa0a6" font-size="10">T1-T4 = traversal transition points (encode as 4-letter code per pillar)</text>
+<defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#6ec1ff"/></marker></defs>
+</svg></div>
+
+<p>All 8 pillars carry a 26x5 letter/symbol grid at the same height (1709mm). Read in labyrinth (boustrophedon) pattern. The four transition positions between row pairs are recorded as a 4-letter
+traversal code per pillar. These codes are believed to encode rotor settings or parameters for the
+Pillar C rotor machine.</p>
+
+<h2>Traversal codes</h2>
+<table class="canon">
+<thead><tr><th>Pillar</th><th>Traversal code</th><th>Endpoint position</th><th>Start row</th></tr></thead>
+<tbody>
+<tr><td>A</td><td><code>DNOI</code></td><td>Below fiducial</td><td>Top row</td></tr><tr><td>B</td><td><code>CFEC</code></td><td>Below fiducial</td><td>Top row</td></tr><tr><td>C</td><td><code>FHIG</code></td><td>Opposite fiducial</td><td>Top row</td></tr><tr><td>D</td><td><code>HWCJ</code></td><td>Below fiducial</td><td>Bottom row</td></tr><tr><td>E</td><td><code>EFCF</code></td><td>Opposite fiducial</td><td>Top row</td></tr><tr><td>F</td><td><code>CMBH</code></td><td>Opposite fiducial</td><td>Top row</td></tr><tr><td>G</td><td><code>unknown</code></td><td>Opposite fiducial</td><td>Bottom row</td></tr><tr><td>H</td><td><code>SMOU</code></td><td>Below fiducial</td><td>Top row</td></tr>
+</tbody></table>
+<div class="key-insight">
+<strong>Pillar G's traversal code is unknown.</strong> Solving the squircle cipher should reveal it, completing the set of eight codes needed for the final puzzle.
+</div>
+</section>
+<section class="page" id="pillar-A">
+<h1 class="page-title">Pillar A / #7 &mdash; Caesar</h1>
+<div class="pillar-meta"><table>
+<tr><th>Letter (meme.net.au)</th><td>A</td></tr>
+<tr><th>Number (dkrypt.org)</th><td>7</td></tr>
+<tr><th>Total height</th><td>1709 mm</td></tr>
+<tr><th>Extension above ring</th><td>0 mm</td></tr>
+<tr><th>Fiducial separation</th><td>0 mm</td></tr>
+<tr><th>Fiducial direction</th><td>south-east</td></tr>
+<tr><th>Traversal code</th><td><code>DNOI</code></td></tr>
+<tr><th>Paired with</th><td><a href="#pillar-C">Pillar C</a> &mdash; Tightest pair, same group on both upper and lower channels</td></tr>
+</table></div>
+<div class="cipher-card">
+<h3>Geospatial <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">Number string as lat/lon GPS coordinates</div>
+<details><summary>Ciphertext</summary><div class="ciphertext">35248614916353547101490974
+24725391509414892533731941
+14909573522681490367353636
+41635353213194116435346709
+81491040353180149092635377</div></details>
+<div class="conjecture"><strong>Note:</strong> Solution to Questacon&#x27;s Centenary Code challenge (2014)</div>
+<p><strong>Decoded suburbs:</strong> Ainslie, Parkes, Deakin, Farrer, Chifley, Rivett, Mawson, Florey, Hackett, Banks</p>
+<p class="attribution">Solved by: Glenn McIntosh</p>
+</div>
+<div class="cipher-card">
+<h3>Caesar/shift/al-Kindi/Vigenere <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">Progressive shift ciphers (Caesar shift 1, shift 2, al-Kindi frequency, Vigenere)</div>
+<details><summary>Ciphertext</summary><div class="ciphertext">A LETTER SHIFT A CIPHER MAKES
+A FAMOUS ROMANS NAME IT TAKES
+
+B MFUUFS TIJGU B DJQIFS NBLFT
+B GBNPVT SPNBOT OBNF JU UBLFT
+
+C UJKHV QH VYQ AQW PQY ECP DTGCM
+DWV QVJGT OQXGU C EQFG ECP OCMG
+
+KRZHYHU WKHB EH VZDSSHG DERXW
+D NXID PDQ FRXOG ILQG WKHP RXW
+
+RPKR QMWJZZKRG WYMABY
+INGY PZBZIE XROZA
+OPK RNQV SA ENMPL
+XVZIZ GBHV ERIQIF</div></details>
+<div class="poem">A letter shift a cipher makes
+ a famous Roman&#x27;s name it takes [Caesar]
+A shift of two you now can break
+ but other moves a code can make [shift]
+However they be swapped about
+ a Kufa man could find them out [al-Kindi]
+When different shifts
+ each letter takes
+The name of which
+ great code awakes [Vigenere]</div>
+<p><strong>Key:</strong> <code>VIGENERE (for the final Vigenere stanza)</code></p>
+<p class="attribution">Solved by: Gregory Lloyd</p>
+</div>
+</section><section class="page" id="pillar-B">
+<h1 class="page-title">Pillar B / #4 &mdash; Scytale</h1>
+<div class="pillar-meta"><table>
+<tr><th>Letter (meme.net.au)</th><td>B</td></tr>
+<tr><th>Number (dkrypt.org)</th><td>4</td></tr>
+<tr><th>Total height</th><td>1887 mm</td></tr>
+<tr><th>Extension above ring</th><td>178 mm</td></tr>
+<tr><th>Fiducial separation</th><td>116 mm</td></tr>
+<tr><th>Fiducial direction</th><td>north-east</td></tr>
+<tr><th>Traversal code</th><td><code>CFEC</code></td></tr>
+<tr><th>Paired with</th><td><a href="#pillar-H">Pillar H</a> &mdash; Compact upper, sparse lower</td></tr>
+</table></div>
+<div class="cipher-card">
+<h3>Semaphore (Chappe) <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">Chappe semaphore with angle pairs</div>
+<p>Chappe semaphore system. Each symbol transcribed as a number pair representing arm angles (45, 90, 135, 225, 270, 315 degrees).</p>
+<details><summary>Ciphertext</summary><div class="ciphertext">65 45 32 33 42 46 64 64 21 66 46 32 34 64 51 42 31 12 66 33 43 65 33 66 11 51
+64 12 64 64 33 42 33 66 32 55 66 41 46 45 33 13 12 64 56 45 34 13 26 66 36 26
+45 51 64 64 36 51 66 46 64 51 51 66 41 64 32 34 66 42 31 13 45 33 66 34 34 26
+12 64 45 31 26 51 11 66 33 12 12 31 66 51 11 42 33 12 31 42 64 46 42 26 55 11
+45 24 56 12 64 46 66 31 12 51 66 51 26 33 45 31 41 64 33 43 64 55 42 46 32 33</div></details>
+<div class="poem">Code that flowed from gay Paris
+ a message plain for all to see
+ now demands a stronger key
+Improved by time in dribs and drabs
+ three prime examples in dark crabs</div>
+<p class="attribution">Solved by: Bob Dovenberg</p>
+</div>
+<div class="cipher-card">
+<h3>Scytale <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">Scytale wrapped on hexagonal baton</div>
+<p>Scytale wrapped around a hexagonal baton. References Histiaeus (message tattooed on slave&#x27;s head) and Lysander of Sparta (scytale message, 404 BC).</p>
+<details><summary>Ciphertext</summary><div class="ciphertext">AGPSHALHALIECNREWTOCTPUWS
+MEOLOLOADOEEEOSAAHVHEERIP
+EHNAWLSVMFNCRFICCAESRDENA
+SIHVNBEEIATETAAEOTDMHEHFR
+SDIETYRARNGUAPNSDPMAENIOT
+AUSSOCSNACRNIEPAERURLSSRA</div></details>
+<div class="poem">A message hid upon his slave
+ shown to all by closer shave
+An admiral of ancient Greece
+ uncertain of a Persian peace
+Saw a code that proved much smarter
+ helped ensure his win for Sparta</div>
+<p class="attribution">Solved by: skintigh</p>
+</div>
+</section><section class="page" id="pillar-C">
+<h1 class="page-title">Pillar C / #6 &mdash; Enigma</h1>
+<div class="pillar-meta"><table>
+<tr><th>Letter (meme.net.au)</th><td>C</td></tr>
+<tr><th>Number (dkrypt.org)</th><td>6</td></tr>
+<tr><th>Total height</th><td>2153 mm</td></tr>
+<tr><th>Extension above ring</th><td>444 mm</td></tr>
+<tr><th>Fiducial separation</th><td>354 mm</td></tr>
+<tr><th>Fiducial direction</th><td>north-east</td></tr>
+<tr><th>Traversal code</th><td><code>FHIG</code></td></tr>
+<tr><th>Paired with</th><td><a href="#pillar-A">Pillar A</a> &mdash; Tightest pair, same group on both upper and lower channels</td></tr>
+</table></div>
+<div class="cipher-card">
+<h3>Binary <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">Binary (dash=1, dot=0), 2x3 arrays</div>
+<div class="poem">Branly, Braun, Campillo, Cooke, DeMoura, Dyar, Faraday, Gauss, Henry, Hertz, Marconi, Morse, Rutherford, Schilling, Soemmering, Sturgeon, Tesla, Vail, Weber, Wheatstone</div>
+<p class="attribution">Solved by: Glenn McIntosh</p>
+</div>
+<div class="cipher-card">
+<h3>Rotor <span class="badge blocked">Unsolved</span></h3>
+<div class="ciphertype">Enigma-like rotor machine</div>
+<details><summary>Ciphertext</summary><div class="ciphertext">BIOB AXQC NLPA MNXE SBNT FJLD DL
+JAWS FDHD MATX EJHM PVUJ XJOM KH</div></details>
+<div class="conjecture"><strong>Note:</strong> Cannot be cracked from pillar data alone. Needs cross-pillar information.</div>
+<details><summary>Approaches tested</summary><div class="attempts">Single-key 26^4 brute force, 12+ rotor advancement schemes, L1/L2 group pairings, beam search, traversal codes as keys - all rejected.</div></details>
+</div>
+</section><section class="page" id="pillar-D">
+<h1 class="page-title">Pillar D / #2 &mdash; Cogs</h1>
+<div class="pillar-meta"><table>
+<tr><th>Letter (meme.net.au)</th><td>D</td></tr>
+<tr><th>Number (dkrypt.org)</th><td>2</td></tr>
+<tr><th>Total height</th><td>2347 mm</td></tr>
+<tr><th>Extension above ring</th><td>638 mm</td></tr>
+<tr><th>Fiducial separation</th><td>571 mm</td></tr>
+<tr><th>Fiducial direction</th><td>south-west</td></tr>
+<tr><th>Traversal code</th><td><code>HWCJ</code></td></tr>
+<tr><th>Paired with</th><td><a href="#pillar-E">Pillar E</a> &mdash; Mid lower, both pictographic</td></tr>
+</table></div>
+<div class="cipher-card">
+<h3>Pigpen <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">Pigpen cipher, German text, RTL lines upside-down</div>
+<p>Pigpen cipher in German. The plaintext is the Queen of the Night aria from Mozart&#x27;s Die Zauberfloete. Pigpen was commonly used by the Freemasons, and the opera contains rationalist Freemason motifs.</p>
+<details><summary>Ciphertext</summary><div class="ciphertext">LUCKVERURCHSIEGINGALLMEING
+IENEROLDRIMTELHEFRETHCSOBN
+HTUSERKORENDENNMEINETOEWIC
+NEAHCINIBESHCONRHITIMHOLFT
+ZUMLEIDENHICHSIEZITTERN123</div></details>
+<div class="poem">Zum Leiden bin ich auserkoren
+ Denn meine Tochter fehlet mir;
+Durch sie ging all mein Gluck verloren
+ Ein Bosewicht entfloh mit ihr
+Noch seh ich sie zittern.
+ 1 2 3
+
+(I am chosen for suffering,
+ for my daughter is gone from me;
+Through her all my happiness has been lost,
+ a villain fled with her
+I can still see her trembling. 1 2 3)</div>
+<div class="conjecture"><strong>Note:</strong> Pigpen = Freemason cipher; Magic Flute has Masonic motifs; &quot;123&quot; may reference the three opening chords (Eb minor, C minor, Eb major), three Masonic pillars, or three veiled ladies</div>
+<p class="attribution">Solved by: Bob Dovenberg</p>
+</div>
+<div class="cipher-card">
+<h3>Cogs <span class="badge blocked">Unsolved</span></h3>
+<div class="ciphertype">71 cog-shaped glyphs across 7 columns (16/10/9/10/10/7/9)</div>
+<p>71 cog-shaped glyphs across 7 columns. Each cog has 2-4 sets of teeth, a dot angle, and internal dots. Adjacent cogs in a column either mesh (teeth interleave) or clash. 43 mesh-compatibility groups identified.</p>
+<details><summary>Approaches tested</summary><div class="attempts">Direct substitution, angle mapping, Polybius, Vigenere/Beaufort with 80+ keys, Friedman analysis - all rejected. Multi-channel encoding likely.</div></details>
+<details open><summary>Mesh-compatibility groups</summary><table class="canon"><thead><tr><th>Column</th><th>Cogs</th><th>Groups</th><th>Group pattern</th></tr></thead><tbody>
+<tr><td>1</td><td>16</td><td>9</td><td><code>A | BCD | E | F | G | HIJK | L | MNO | P</code></td></tr>
+<tr><td>2</td><td>10</td><td>5</td><td><code>A | BC | DEFGH | I | J</code></td></tr>
+<tr><td>3</td><td>9</td><td>7</td><td><code>AB | C | D | E | FG | H | I</code></td></tr>
+<tr><td>4</td><td>10</td><td>6</td><td><code>ABCD | EF | G | H | I | J</code></td></tr>
+<tr><td>5</td><td>10</td><td>4</td><td><code>AB | C | DE | FGHIJ</code></td></tr>
+<tr><td>6</td><td>7</td><td>5</td><td><code>A | B | CD | E | FG</code></td></tr>
+<tr><td>7</td><td>9</td><td>7</td><td><code>A | B | C | D | E | FG | HI</code></td></tr>
+</tbody></table></details>
+</div>
+</section><section class="page" id="pillar-E">
+<h1 class="page-title">Pillar E / #8 &mdash; Bubbles/Braille</h1>
+<div class="pillar-meta"><table>
+<tr><th>Letter (meme.net.au)</th><td>E</td></tr>
+<tr><th>Number (dkrypt.org)</th><td>8</td></tr>
+<tr><th>Total height</th><td>2393 mm</td></tr>
+<tr><th>Extension above ring</th><td>684 mm</td></tr>
+<tr><th>Fiducial separation</th><td>628 mm</td></tr>
+<tr><th>Fiducial direction</th><td>south-east</td></tr>
+<tr><th>Traversal code</th><td><code>EFCF</code></td></tr>
+<tr><th>Paired with</th><td><a href="#pillar-D">Pillar D</a> &mdash; Mid lower, both pictographic</td></tr>
+</table></div>
+<div class="cipher-card">
+<h3>Braille <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">Braille cipher, RTL lines upside-down</div>
+<p>Braille cipher with right-to-left lines upside-down. References Napoleon, Barbier (night writing), and Louis Braille.</p>
+<div class="poem">A short-sighted general with buses to park [Napoleon]
+ an old French Barber sitting quite in the dark [Barbier]
+Tip of a finger, glide of a snail [Braille]
+ all our great works on the head of a nail.</div>
+<p class="attribution">Solved by: Bob Dovenberg</p>
+</div>
+<div class="cipher-card">
+<h3>Rail fence <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">Rail fence transposition cipher</div>
+<div class="poem">A simple code to hide your tails
+ it&#x27;s letters nailed to different rails [rail fence cipher]
+A famous scholar from times past
+ with copper discs encoded fast [Alberti]
+A German monk with codes so strong
+ used keys to shift the cipher on [Trithemius]
+A family down the mountainside
+ a cabinet noir they worked inside [Rossignol]</div>
+<p class="attribution">Solved by: Matthew Bienik</p>
+</div>
+</section><section class="page" id="pillar-F">
+<h1 class="page-title">Pillar F / #3 &mdash; Hexstars/DNA</h1>
+<div class="pillar-meta"><table>
+<tr><th>Letter (meme.net.au)</th><td>F</td></tr>
+<tr><th>Number (dkrypt.org)</th><td>3</td></tr>
+<tr><th>Total height</th><td>2379 mm</td></tr>
+<tr><th>Extension above ring</th><td>670 mm</td></tr>
+<tr><th>Fiducial separation</th><td>636 mm</td></tr>
+<tr><th>Fiducial direction</th><td>north-west</td></tr>
+<tr><th>Traversal code</th><td><code>CMBH</code></td></tr>
+<tr><th>Paired with</th><td><a href="#pillar-G">Pillar G</a> &mdash; Long lower ciphers</td></tr>
+</table></div>
+<div class="cipher-card">
+<h3>DNA codons <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">DNA 3-letter codons mapped to amino acid single-letter codes</div>
+<p>DNA 3-letter codons mapped to amino acid single-letter codes. May reference conservation geneticist Karen Firestone and the Australian Museum thylacine DNA recovery project.</p>
+<details><summary>Ciphertext</summary><div class="ciphertext">TTC GCA CGA TCG ATC GGT CAT ACG GAG GAC CTG GCA GAC TAC TGG GAG ATG GCA TAC TCG CCG GCA TGG AAC GCA CGA GAG CCG GCA ATC AAC ACG GAG GAC ACG CAT TAC CTG GCA TGC ATC AAC GAG</div></details>
+<div class="poem">Far sighted lady, we may spawn a repainted thylacine</div>
+<div class="conjecture"><strong>Note:</strong> May reference conservation geneticist Karen Firestone and thylacine DNA recovery</div>
+<p class="attribution">Solved by: Bob Dovenberg</p>
+</div>
+<div class="cipher-card">
+<h3>Astroids <span class="badge blocked">Unsolved</span></h3>
+<div class="ciphertype">Four-pointed star glyphs (U+2726) in 42 columns with irregular vertical spacing</div>
+<details><summary>Approaches tested</summary><div class="attempts">Count-to-letter, Polybius pairs, y-position mapping, binary grid, spectral matching (H, He, Li, Na etc.), music/constellation mapping - all rejected. Likely needs cross-pillar key from paired pillar G.</div></details>
+<details><summary>Per-column counts (42 columns)</summary><div class="ciphertext">[4, 4, 18, 6, 4, 10, 3, 13, 4, 13, 8, 12, 4, 4, 3, 12, 9, 11, 9, 8, 12, 4, 10, 10, 13, 16, 11, 14, 7, 12, 6, 4, 6, 3, 11, 6, 16, 15, 6, 8, 12, 8]</div></details>
+</div>
+</section><section class="page" id="pillar-G">
+<h1 class="page-title">Pillar G / #5 &mdash; Squircles</h1>
+<div class="pillar-meta"><table>
+<tr><th>Letter (meme.net.au)</th><td>G</td></tr>
+<tr><th>Number (dkrypt.org)</th><td>5</td></tr>
+<tr><th>Total height</th><td>2432 mm</td></tr>
+<tr><th>Extension above ring</th><td>723 mm</td></tr>
+<tr><th>Fiducial separation</th><td>655 mm</td></tr>
+<tr><th>Fiducial direction</th><td>south-east</td></tr>
+<tr><th>Traversal code</th><td><code>unknown</code></td></tr>
+<tr><th>Paired with</th><td><a href="#pillar-F">Pillar F</a> &mdash; Long lower ciphers</td></tr>
+</table></div>
+<div class="cipher-card">
+<h3>Squircles <span class="badge blocked">Unsolved</span></h3>
+<div class="ciphertype">10x26 grid of 4-orientation petal/cam shapes (encoded 0-3)</div>
+<p>10x26 grid of 4-orientation petal/cam shapes (encoded 0-3). Creator hint (Kohlhagen via Schmeh): vertical pairs form a 26x5 labyrinth grid; 4 squircles per plaintext letter (codon-like redundancy); approximately 65 letters of plaintext. Best reading config: pair-boustrophedon with odd start column gives 50 distinct 4-cell codons. Pattern (1,3,0,3) appears 8 times (12.3%), matching English E frequency (12.7%).</p>
+<details><summary>Approaches tested</summary><div class="attempts">All simple substitutions, Vigenere, Bifid, Hill, autokey, running-key with solved poems, SA on homophonic - all rejected. 44 of 65 positions are singletons = too many free variables for frequency attack.</div></details>
+<details><summary>Grid data</summary><div class="ciphertext">01110011011101021231331012
+02030013322303333000200032
+21221133103032320102000132
+23123002121223001301131123
+10103100010101201201221103
+30212131033000203011112330
+30101111212032132012210133
+13303323023120222333322012
+00000101022001203231310031
+30110333202120112302112123</div></details>
+</div>
+<div class="cipher-card">
+<h3>Waveform/Helix <span class="badge blocked">Unsolved</span></h3>
+<div class="ciphertype">515 characters in double-helix visual layout</div>
+<p>515 characters in double-helix visual layout. Lines offset like a plane projection of a double helix. Sine wave frequency approximately 0.75 radians per line, with line endings lagging by a quarter circle. IC = 1.014 (flat); chi-squared vs English = 2205. Definitively not simple substitution or transposition.</p>
+<details><summary>Ciphertext</summary><div class="ciphertext">UWGHTLIYCOEYDY
+RFKVOACMHPUCEAL
+BANYUJHEESHABPS
+NAYIDQGILTIVKTE
+FAESOKTMZQDMRGH
+HYLHNICNLBNWWXX
+KGAPYHIIQHSKETZ
+RRENUCMTVUINLZR
+ICYRFFGTKDNBQSH
+NLXZWKMVCICTCDD
+ZAOWRSUNVMDOIXG
+ZCCFCUEAKAKFSMP
+YRHUUTMCYSSMPFG
+TUCIESREQXAICHL
+LYVBKNNZVBPKNQA
+EXQSHOSGVZDHDFM
+HYPHCUDQTMWVNEK
+NGACBGTSACXEHRE
+DUUHNQVDATWTIEK
+ZRFHTOFRUPTKHNP
+XYNFBBHWPVSSKIN
+NOHYWLJQZKWRSQO
+UIEEQKYEMPRQEDM
+IVSVAPNGKDVPQME
+XGCIOAVXVIGTPIQ
+ORDQRJEKWFPVWZP
+ECYNYRCGWWIFCYX
+GVLGPLBSJGMIJCX
+RHYEOHHWTXOAGYS
+FSDOZGZJGNPTRUA
+ESTRPYFTJVZQHOP
+EQLOQRGPHPKEDEI
+IQHCZYWPJZKAZQA
+KSKMIPLDRGCWCAD
+GZCDBB</div></details>
+<div class="conjecture"><strong>Note:</strong> IC flat; definitively not simple substitution. Lines offset like a double-helix projection; sine wave freq approximately 0.75 rad/line</div>
+</div>
+</section><div class="svg-container"><h3>Squircle orientation grid</h3><svg viewBox="0 0 528 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:528px;font-family:monospace;">
+<rect width="528" height="260" rx="8" fill="#0e1117" stroke="#2a313c"/>
+<text x="39" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">1</text>
+<text x="57" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">2</text>
+<text x="75" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">3</text>
+<text x="93" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">4</text>
+<text x="111" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">5</text>
+<text x="129" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">6</text>
+<text x="147" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">7</text>
+<text x="165" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">8</text>
+<text x="183" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">9</text>
+<text x="201" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">10</text>
+<text x="219" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">11</text>
+<text x="237" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">12</text>
+<text x="255" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">13</text>
+<text x="273" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">14</text>
+<text x="291" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">15</text>
+<text x="309" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">16</text>
+<text x="327" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">17</text>
+<text x="345" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">18</text>
+<text x="363" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">19</text>
+<text x="381" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">20</text>
+<text x="399" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">21</text>
+<text x="417" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">22</text>
+<text x="435" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">23</text>
+<text x="453" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">24</text>
+<text x="471" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">25</text>
+<text x="489" y="22" fill="#9aa0a6" font-size="7" text-anchor="middle">26</text>
+<text x="18" y="42" fill="#9aa0a6" font-size="7" text-anchor="end">R1</text>
+<text x="18" y="60" fill="#9aa0a6" font-size="7" text-anchor="end">R2</text>
+<text x="18" y="78" fill="#9aa0a6" font-size="7" text-anchor="end">R3</text>
+<text x="18" y="96" fill="#9aa0a6" font-size="7" text-anchor="end">R4</text>
+<text x="18" y="114" fill="#9aa0a6" font-size="7" text-anchor="end">R5</text>
+<text x="18" y="132" fill="#9aa0a6" font-size="7" text-anchor="end">R6</text>
+<text x="18" y="150" fill="#9aa0a6" font-size="7" text-anchor="end">R7</text>
+<text x="18" y="168" fill="#9aa0a6" font-size="7" text-anchor="end">R8</text>
+<text x="18" y="186" fill="#9aa0a6" font-size="7" text-anchor="end">R9</text>
+<text x="18" y="204" fill="#9aa0a6" font-size="7" text-anchor="end">R10</text>
+<path d="M32,39 Q32,32 39,32 Q46,32 46,39 Q46,41.1 39,41.1 Q32,41.1 32,39Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M57,36.9 Q64,36.9 64,39 Q64,46 57,46 Q50,46 50,39 Q50,36.9 57,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M75,36.9 Q82,36.9 82,39 Q82,46 75,46 Q68,46 68,39 Q68,36.9 75,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M93,36.9 Q100,36.9 100,39 Q100,46 93,46 Q86,46 86,39 Q86,36.9 93,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M104,39 Q104,32 111,32 Q118,32 118,39 Q118,41.1 111,41.1 Q104,41.1 104,39Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M122,39 Q122,32 129,32 Q136,32 136,39 Q136,41.1 129,41.1 Q122,41.1 122,39Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M147,36.9 Q154,36.9 154,39 Q154,46 147,46 Q140,46 140,39 Q140,36.9 147,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M165,36.9 Q172,36.9 172,39 Q172,46 165,46 Q158,46 158,39 Q158,36.9 165,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M176,39 Q176,32 183,32 Q190,32 190,39 Q190,41.1 183,41.1 Q176,41.1 176,39Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M201,36.9 Q208,36.9 208,39 Q208,46 201,46 Q194,46 194,39 Q194,36.9 201,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M219,36.9 Q226,36.9 226,39 Q226,46 219,46 Q212,46 212,39 Q212,36.9 219,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M237,36.9 Q244,36.9 244,39 Q244,46 237,46 Q230,46 230,39 Q230,36.9 237,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M248,39 Q248,32 255,32 Q262,32 262,39 Q262,41.1 255,41.1 Q248,41.1 248,39Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M273,36.9 Q280,36.9 280,39 Q280,46 273,46 Q266,46 266,39 Q266,36.9 273,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M284,39 Q284,32 291,32 Q298,32 298,39 Q298,41.1 291,41.1 Q284,41.1 284,39Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M316,39 Q316,46 309,46 Q302,46 302,39 Q302,36.9 309,36.9 Q316,36.9 316,39Z" fill="#4caf50" opacity="0.85"/>
+<path d="M327,36.9 Q334,36.9 334,39 Q334,46 327,46 Q320,46 320,39 Q320,36.9 327,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M352,39 Q352,46 345,46 Q338,46 338,39 Q338,36.9 345,36.9 Q352,36.9 352,39Z" fill="#4caf50" opacity="0.85"/>
+<path d="M370,39 Q370,32 363,32 Q356,32 356,39 Q356,41.1 363,41.1 Q370,41.1 370,39Z" fill="#ef5350" opacity="0.85"/>
+<path d="M381,36.9 Q388,36.9 388,39 Q388,46 381,46 Q374,46 374,39 Q374,36.9 381,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M406,39 Q406,32 399,32 Q392,32 392,39 Q392,41.1 399,41.1 Q406,41.1 406,39Z" fill="#ef5350" opacity="0.85"/>
+<path d="M424,39 Q424,32 417,32 Q410,32 410,39 Q410,41.1 417,41.1 Q424,41.1 424,39Z" fill="#ef5350" opacity="0.85"/>
+<path d="M435,36.9 Q442,36.9 442,39 Q442,46 435,46 Q428,46 428,39 Q428,36.9 435,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M446,39 Q446,32 453,32 Q460,32 460,39 Q460,41.1 453,41.1 Q446,41.1 446,39Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M471,36.9 Q478,36.9 478,39 Q478,46 471,46 Q464,46 464,39 Q464,36.9 471,36.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M496,39 Q496,46 489,46 Q482,46 482,39 Q482,36.9 489,36.9 Q496,36.9 496,39Z" fill="#4caf50" opacity="0.85"/>
+<path d="M32,57 Q32,50 39,50 Q46,50 46,57 Q46,59.1 39,59.1 Q32,59.1 32,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M64,57 Q64,64 57,64 Q50,64 50,57 Q50,54.9 57,54.9 Q64,54.9 64,57Z" fill="#4caf50" opacity="0.85"/>
+<path d="M68,57 Q68,50 75,50 Q82,50 82,57 Q82,59.1 75,59.1 Q68,59.1 68,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M100,57 Q100,50 93,50 Q86,50 86,57 Q86,59.1 93,59.1 Q100,59.1 100,57Z" fill="#ef5350" opacity="0.85"/>
+<path d="M104,57 Q104,50 111,50 Q118,50 118,57 Q118,59.1 111,59.1 Q104,59.1 104,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M122,57 Q122,50 129,50 Q136,50 136,57 Q136,59.1 129,59.1 Q122,59.1 122,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M147,54.9 Q154,54.9 154,57 Q154,64 147,64 Q140,64 140,57 Q140,54.9 147,54.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M172,57 Q172,50 165,50 Q158,50 158,57 Q158,59.1 165,59.1 Q172,59.1 172,57Z" fill="#ef5350" opacity="0.85"/>
+<path d="M190,57 Q190,50 183,50 Q176,50 176,57 Q176,59.1 183,59.1 Q190,59.1 190,57Z" fill="#ef5350" opacity="0.85"/>
+<path d="M208,57 Q208,64 201,64 Q194,64 194,57 Q194,54.9 201,54.9 Q208,54.9 208,57Z" fill="#4caf50" opacity="0.85"/>
+<path d="M226,57 Q226,64 219,64 Q212,64 212,57 Q212,54.9 219,54.9 Q226,54.9 226,57Z" fill="#4caf50" opacity="0.85"/>
+<path d="M244,57 Q244,50 237,50 Q230,50 230,57 Q230,59.1 237,59.1 Q244,59.1 244,57Z" fill="#ef5350" opacity="0.85"/>
+<path d="M248,57 Q248,50 255,50 Q262,50 262,57 Q262,59.1 255,59.1 Q248,59.1 248,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M280,57 Q280,50 273,50 Q266,50 266,57 Q266,59.1 273,59.1 Q280,59.1 280,57Z" fill="#ef5350" opacity="0.85"/>
+<path d="M298,57 Q298,50 291,50 Q284,50 284,57 Q284,59.1 291,59.1 Q298,59.1 298,57Z" fill="#ef5350" opacity="0.85"/>
+<path d="M316,57 Q316,50 309,50 Q302,50 302,57 Q302,59.1 309,59.1 Q316,59.1 316,57Z" fill="#ef5350" opacity="0.85"/>
+<path d="M334,57 Q334,50 327,50 Q320,50 320,57 Q320,59.1 327,59.1 Q334,59.1 334,57Z" fill="#ef5350" opacity="0.85"/>
+<path d="M338,57 Q338,50 345,50 Q352,50 352,57 Q352,59.1 345,59.1 Q338,59.1 338,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M356,57 Q356,50 363,50 Q370,50 370,57 Q370,59.1 363,59.1 Q356,59.1 356,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M374,57 Q374,50 381,50 Q388,50 388,57 Q388,59.1 381,59.1 Q374,59.1 374,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M406,57 Q406,64 399,64 Q392,64 392,57 Q392,54.9 399,54.9 Q406,54.9 406,57Z" fill="#4caf50" opacity="0.85"/>
+<path d="M410,57 Q410,50 417,50 Q424,50 424,57 Q424,59.1 417,59.1 Q410,59.1 410,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M428,57 Q428,50 435,50 Q442,50 442,57 Q442,59.1 435,59.1 Q428,59.1 428,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M446,57 Q446,50 453,50 Q460,50 460,57 Q460,59.1 453,59.1 Q446,59.1 446,57Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M478,57 Q478,50 471,50 Q464,50 464,57 Q464,59.1 471,59.1 Q478,59.1 478,57Z" fill="#ef5350" opacity="0.85"/>
+<path d="M496,57 Q496,64 489,64 Q482,64 482,57 Q482,54.9 489,54.9 Q496,54.9 496,57Z" fill="#4caf50" opacity="0.85"/>
+<path d="M46,75 Q46,82 39,82 Q32,82 32,75 Q32,72.9 39,72.9 Q46,72.9 46,75Z" fill="#4caf50" opacity="0.85"/>
+<path d="M57,72.9 Q64,72.9 64,75 Q64,82 57,82 Q50,82 50,75 Q50,72.9 57,72.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M82,75 Q82,82 75,82 Q68,82 68,75 Q68,72.9 75,72.9 Q82,72.9 82,75Z" fill="#4caf50" opacity="0.85"/>
+<path d="M100,75 Q100,82 93,82 Q86,82 86,75 Q86,72.9 93,72.9 Q100,72.9 100,75Z" fill="#4caf50" opacity="0.85"/>
+<path d="M111,72.9 Q118,72.9 118,75 Q118,82 111,82 Q104,82 104,75 Q104,72.9 111,72.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M129,72.9 Q136,72.9 136,75 Q136,82 129,82 Q122,82 122,75 Q122,72.9 129,72.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M154,75 Q154,68 147,68 Q140,68 140,75 Q140,77.1 147,77.1 Q154,77.1 154,75Z" fill="#ef5350" opacity="0.85"/>
+<path d="M172,75 Q172,68 165,68 Q158,68 158,75 Q158,77.1 165,77.1 Q172,77.1 172,75Z" fill="#ef5350" opacity="0.85"/>
+<path d="M183,72.9 Q190,72.9 190,75 Q190,82 183,82 Q176,82 176,75 Q176,72.9 183,72.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M194,75 Q194,68 201,68 Q208,68 208,75 Q208,77.1 201,77.1 Q194,77.1 194,75Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M226,75 Q226,68 219,68 Q212,68 212,75 Q212,77.1 219,77.1 Q226,77.1 226,75Z" fill="#ef5350" opacity="0.85"/>
+<path d="M230,75 Q230,68 237,68 Q244,68 244,75 Q244,77.1 237,77.1 Q230,77.1 230,75Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M262,75 Q262,68 255,68 Q248,68 248,75 Q248,77.1 255,77.1 Q262,77.1 262,75Z" fill="#ef5350" opacity="0.85"/>
+<path d="M280,75 Q280,82 273,82 Q266,82 266,75 Q266,72.9 273,72.9 Q280,72.9 280,75Z" fill="#4caf50" opacity="0.85"/>
+<path d="M298,75 Q298,68 291,68 Q284,68 284,75 Q284,77.1 291,77.1 Q298,77.1 298,75Z" fill="#ef5350" opacity="0.85"/>
+<path d="M316,75 Q316,82 309,82 Q302,82 302,75 Q302,72.9 309,72.9 Q316,72.9 316,75Z" fill="#4caf50" opacity="0.85"/>
+<path d="M320,75 Q320,68 327,68 Q334,68 334,75 Q334,77.1 327,77.1 Q320,77.1 320,75Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M345,72.9 Q352,72.9 352,75 Q352,82 345,82 Q338,82 338,75 Q338,72.9 345,72.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M356,75 Q356,68 363,68 Q370,68 370,75 Q370,77.1 363,77.1 Q356,77.1 356,75Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M388,75 Q388,82 381,82 Q374,82 374,75 Q374,72.9 381,72.9 Q388,72.9 388,75Z" fill="#4caf50" opacity="0.85"/>
+<path d="M392,75 Q392,68 399,68 Q406,68 406,75 Q406,77.1 399,77.1 Q392,77.1 392,75Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M410,75 Q410,68 417,68 Q424,68 424,75 Q424,77.1 417,77.1 Q410,77.1 410,75Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M428,75 Q428,68 435,68 Q442,68 442,75 Q442,77.1 435,77.1 Q428,77.1 428,75Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M453,72.9 Q460,72.9 460,75 Q460,82 453,82 Q446,82 446,75 Q446,72.9 453,72.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M478,75 Q478,68 471,68 Q464,68 464,75 Q464,77.1 471,77.1 Q478,77.1 478,75Z" fill="#ef5350" opacity="0.85"/>
+<path d="M496,75 Q496,82 489,82 Q482,82 482,75 Q482,72.9 489,72.9 Q496,72.9 496,75Z" fill="#4caf50" opacity="0.85"/>
+<path d="M46,93 Q46,100 39,100 Q32,100 32,93 Q32,90.9 39,90.9 Q46,90.9 46,93Z" fill="#4caf50" opacity="0.85"/>
+<path d="M64,93 Q64,86 57,86 Q50,86 50,93 Q50,95.1 57,95.1 Q64,95.1 64,93Z" fill="#ef5350" opacity="0.85"/>
+<path d="M75,90.9 Q82,90.9 82,93 Q82,100 75,100 Q68,100 68,93 Q68,90.9 75,90.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M100,93 Q100,100 93,100 Q86,100 86,93 Q86,90.9 93,90.9 Q100,90.9 100,93Z" fill="#4caf50" opacity="0.85"/>
+<path d="M118,93 Q118,86 111,86 Q104,86 104,93 Q104,95.1 111,95.1 Q118,95.1 118,93Z" fill="#ef5350" opacity="0.85"/>
+<path d="M122,93 Q122,86 129,86 Q136,86 136,93 Q136,95.1 129,95.1 Q122,95.1 122,93Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M140,93 Q140,86 147,86 Q154,86 154,93 Q154,95.1 147,95.1 Q140,95.1 140,93Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M172,93 Q172,100 165,100 Q158,100 158,93 Q158,90.9 165,90.9 Q172,90.9 172,93Z" fill="#4caf50" opacity="0.85"/>
+<path d="M183,90.9 Q190,90.9 190,93 Q190,100 183,100 Q176,100 176,93 Q176,90.9 183,90.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M208,93 Q208,100 201,100 Q194,100 194,93 Q194,90.9 201,90.9 Q208,90.9 208,93Z" fill="#4caf50" opacity="0.85"/>
+<path d="M219,90.9 Q226,90.9 226,93 Q226,100 219,100 Q212,100 212,93 Q212,90.9 219,90.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M244,93 Q244,100 237,100 Q230,100 230,93 Q230,90.9 237,90.9 Q244,90.9 244,93Z" fill="#4caf50" opacity="0.85"/>
+<path d="M262,93 Q262,100 255,100 Q248,100 248,93 Q248,90.9 255,90.9 Q262,90.9 262,93Z" fill="#4caf50" opacity="0.85"/>
+<path d="M280,93 Q280,86 273,86 Q266,86 266,93 Q266,95.1 273,95.1 Q280,95.1 280,93Z" fill="#ef5350" opacity="0.85"/>
+<path d="M284,93 Q284,86 291,86 Q298,86 298,93 Q298,95.1 291,95.1 Q284,95.1 284,93Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M302,93 Q302,86 309,86 Q316,86 316,93 Q316,95.1 309,95.1 Q302,95.1 302,93Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M327,90.9 Q334,90.9 334,93 Q334,100 327,100 Q320,100 320,93 Q320,90.9 327,90.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M352,93 Q352,86 345,86 Q338,86 338,93 Q338,95.1 345,95.1 Q352,95.1 352,93Z" fill="#ef5350" opacity="0.85"/>
+<path d="M356,93 Q356,86 363,86 Q370,86 370,93 Q370,95.1 363,95.1 Q356,95.1 356,93Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M381,90.9 Q388,90.9 388,93 Q388,100 381,100 Q374,100 374,93 Q374,90.9 381,90.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M399,90.9 Q406,90.9 406,93 Q406,100 399,100 Q392,100 392,93 Q392,90.9 399,90.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M424,93 Q424,86 417,86 Q410,86 410,93 Q410,95.1 417,95.1 Q424,95.1 424,93Z" fill="#ef5350" opacity="0.85"/>
+<path d="M435,90.9 Q442,90.9 442,93 Q442,100 435,100 Q428,100 428,93 Q428,90.9 435,90.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M453,90.9 Q460,90.9 460,93 Q460,100 453,100 Q446,100 446,93 Q446,90.9 453,90.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M478,93 Q478,100 471,100 Q464,100 464,93 Q464,90.9 471,90.9 Q478,90.9 478,93Z" fill="#4caf50" opacity="0.85"/>
+<path d="M496,93 Q496,86 489,86 Q482,86 482,93 Q482,95.1 489,95.1 Q496,95.1 496,93Z" fill="#ef5350" opacity="0.85"/>
+<path d="M39,108.9 Q46,108.9 46,111 Q46,118 39,118 Q32,118 32,111 Q32,108.9 39,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M50,111 Q50,104 57,104 Q64,104 64,111 Q64,113.1 57,113.1 Q50,113.1 50,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M75,108.9 Q82,108.9 82,111 Q82,118 75,118 Q68,118 68,111 Q68,108.9 75,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M86,111 Q86,104 93,104 Q100,104 100,111 Q100,113.1 93,113.1 Q86,113.1 86,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M118,111 Q118,104 111,104 Q104,104 104,111 Q104,113.1 111,113.1 Q118,113.1 118,111Z" fill="#ef5350" opacity="0.85"/>
+<path d="M129,108.9 Q136,108.9 136,111 Q136,118 129,118 Q122,118 122,111 Q122,108.9 129,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M140,111 Q140,104 147,104 Q154,104 154,111 Q154,113.1 147,113.1 Q140,113.1 140,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M158,111 Q158,104 165,104 Q172,104 172,111 Q172,113.1 165,113.1 Q158,113.1 158,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M176,111 Q176,104 183,104 Q190,104 190,111 Q190,113.1 183,113.1 Q176,113.1 176,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M201,108.9 Q208,108.9 208,111 Q208,118 201,118 Q194,118 194,111 Q194,108.9 201,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M212,111 Q212,104 219,104 Q226,104 226,111 Q226,113.1 219,113.1 Q212,113.1 212,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M237,108.9 Q244,108.9 244,111 Q244,118 237,118 Q230,118 230,111 Q230,108.9 237,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M248,111 Q248,104 255,104 Q262,104 262,111 Q262,113.1 255,113.1 Q248,113.1 248,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M273,108.9 Q280,108.9 280,111 Q280,118 273,118 Q266,118 266,111 Q266,108.9 273,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M298,111 Q298,118 291,118 Q284,118 284,111 Q284,108.9 291,108.9 Q298,108.9 298,111Z" fill="#4caf50" opacity="0.85"/>
+<path d="M302,111 Q302,104 309,104 Q316,104 316,111 Q316,113.1 309,113.1 Q302,113.1 302,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M327,108.9 Q334,108.9 334,111 Q334,118 327,118 Q320,118 320,111 Q320,108.9 327,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M352,111 Q352,118 345,118 Q338,118 338,111 Q338,108.9 345,108.9 Q352,108.9 352,111Z" fill="#4caf50" opacity="0.85"/>
+<path d="M356,111 Q356,104 363,104 Q370,104 370,111 Q370,113.1 363,113.1 Q356,113.1 356,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M381,108.9 Q388,108.9 388,111 Q388,118 381,118 Q374,118 374,111 Q374,108.9 381,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M406,111 Q406,118 399,118 Q392,118 392,111 Q392,108.9 399,108.9 Q406,108.9 406,111Z" fill="#4caf50" opacity="0.85"/>
+<path d="M424,111 Q424,118 417,118 Q410,118 410,111 Q410,108.9 417,108.9 Q424,108.9 424,111Z" fill="#4caf50" opacity="0.85"/>
+<path d="M435,108.9 Q442,108.9 442,111 Q442,118 435,118 Q428,118 428,111 Q428,108.9 435,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M453,108.9 Q460,108.9 460,111 Q460,118 453,118 Q446,118 446,111 Q446,108.9 453,108.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M464,111 Q464,104 471,104 Q478,104 478,111 Q478,113.1 471,113.1 Q464,113.1 464,111Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M496,111 Q496,104 489,104 Q482,104 482,111 Q482,113.1 489,113.1 Q496,113.1 496,111Z" fill="#ef5350" opacity="0.85"/>
+<path d="M46,129 Q46,122 39,122 Q32,122 32,129 Q32,131.1 39,131.1 Q46,131.1 46,129Z" fill="#ef5350" opacity="0.85"/>
+<path d="M50,129 Q50,122 57,122 Q64,122 64,129 Q64,131.1 57,131.1 Q50,131.1 50,129Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M82,129 Q82,136 75,136 Q68,136 68,129 Q68,126.9 75,126.9 Q82,126.9 82,129Z" fill="#4caf50" opacity="0.85"/>
+<path d="M93,126.9 Q100,126.9 100,129 Q100,136 93,136 Q86,136 86,129 Q86,126.9 93,126.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M118,129 Q118,136 111,136 Q104,136 104,129 Q104,126.9 111,126.9 Q118,126.9 118,129Z" fill="#4caf50" opacity="0.85"/>
+<path d="M129,126.9 Q136,126.9 136,129 Q136,136 129,136 Q122,136 122,129 Q122,126.9 129,126.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M154,129 Q154,122 147,122 Q140,122 140,129 Q140,131.1 147,131.1 Q154,131.1 154,129Z" fill="#ef5350" opacity="0.85"/>
+<path d="M165,126.9 Q172,126.9 172,129 Q172,136 165,136 Q158,136 158,129 Q158,126.9 165,126.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M176,129 Q176,122 183,122 Q190,122 190,129 Q190,131.1 183,131.1 Q176,131.1 176,129Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M208,129 Q208,122 201,122 Q194,122 194,129 Q194,131.1 201,131.1 Q208,131.1 208,129Z" fill="#ef5350" opacity="0.85"/>
+<path d="M226,129 Q226,122 219,122 Q212,122 212,129 Q212,131.1 219,131.1 Q226,131.1 226,129Z" fill="#ef5350" opacity="0.85"/>
+<path d="M230,129 Q230,122 237,122 Q244,122 244,129 Q244,131.1 237,131.1 Q230,131.1 230,129Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M248,129 Q248,122 255,122 Q262,122 262,129 Q262,131.1 255,131.1 Q248,131.1 248,129Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M266,129 Q266,122 273,122 Q280,122 280,129 Q280,131.1 273,131.1 Q266,131.1 266,129Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M298,129 Q298,136 291,136 Q284,136 284,129 Q284,126.9 291,126.9 Q298,126.9 298,129Z" fill="#4caf50" opacity="0.85"/>
+<path d="M302,129 Q302,122 309,122 Q316,122 316,129 Q316,131.1 309,131.1 Q302,131.1 302,129Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M334,129 Q334,122 327,122 Q320,122 320,129 Q320,131.1 327,131.1 Q334,131.1 334,129Z" fill="#ef5350" opacity="0.85"/>
+<path d="M338,129 Q338,122 345,122 Q352,122 352,129 Q352,131.1 345,131.1 Q338,131.1 338,129Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M363,126.9 Q370,126.9 370,129 Q370,136 363,136 Q356,136 356,129 Q356,126.9 363,126.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M381,126.9 Q388,126.9 388,129 Q388,136 381,136 Q374,136 374,129 Q374,126.9 381,126.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M399,126.9 Q406,126.9 406,129 Q406,136 399,136 Q392,136 392,129 Q392,126.9 399,126.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M417,126.9 Q424,126.9 424,129 Q424,136 417,136 Q410,136 410,129 Q410,126.9 417,126.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M442,129 Q442,136 435,136 Q428,136 428,129 Q428,126.9 435,126.9 Q442,126.9 442,129Z" fill="#4caf50" opacity="0.85"/>
+<path d="M460,129 Q460,122 453,122 Q446,122 446,129 Q446,131.1 453,131.1 Q460,131.1 460,129Z" fill="#ef5350" opacity="0.85"/>
+<path d="M478,129 Q478,122 471,122 Q464,122 464,129 Q464,131.1 471,131.1 Q478,131.1 478,129Z" fill="#ef5350" opacity="0.85"/>
+<path d="M482,129 Q482,122 489,122 Q496,122 496,129 Q496,131.1 489,131.1 Q482,131.1 482,129Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M46,147 Q46,140 39,140 Q32,140 32,147 Q32,149.1 39,149.1 Q46,149.1 46,147Z" fill="#ef5350" opacity="0.85"/>
+<path d="M50,147 Q50,140 57,140 Q64,140 64,147 Q64,149.1 57,149.1 Q50,149.1 50,147Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M75,144.9 Q82,144.9 82,147 Q82,154 75,154 Q68,154 68,147 Q68,144.9 75,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M86,147 Q86,140 93,140 Q100,140 100,147 Q100,149.1 93,149.1 Q86,149.1 86,147Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M111,144.9 Q118,144.9 118,147 Q118,154 111,154 Q104,154 104,147 Q104,144.9 111,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M129,144.9 Q136,144.9 136,147 Q136,154 129,154 Q122,154 122,147 Q122,144.9 129,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M147,144.9 Q154,144.9 154,147 Q154,154 147,154 Q140,154 140,147 Q140,144.9 147,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M165,144.9 Q172,144.9 172,147 Q172,154 165,154 Q158,154 158,147 Q158,144.9 165,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M190,147 Q190,154 183,154 Q176,154 176,147 Q176,144.9 183,144.9 Q190,144.9 190,147Z" fill="#4caf50" opacity="0.85"/>
+<path d="M201,144.9 Q208,144.9 208,147 Q208,154 201,154 Q194,154 194,147 Q194,144.9 201,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M226,147 Q226,154 219,154 Q212,154 212,147 Q212,144.9 219,144.9 Q226,144.9 226,147Z" fill="#4caf50" opacity="0.85"/>
+<path d="M230,147 Q230,140 237,140 Q244,140 244,147 Q244,149.1 237,149.1 Q230,149.1 230,147Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M262,147 Q262,140 255,140 Q248,140 248,147 Q248,149.1 255,149.1 Q262,149.1 262,147Z" fill="#ef5350" opacity="0.85"/>
+<path d="M280,147 Q280,154 273,154 Q266,154 266,147 Q266,144.9 273,144.9 Q280,144.9 280,147Z" fill="#4caf50" opacity="0.85"/>
+<path d="M291,144.9 Q298,144.9 298,147 Q298,154 291,154 Q284,154 284,147 Q284,144.9 291,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M316,147 Q316,140 309,140 Q302,140 302,147 Q302,149.1 309,149.1 Q316,149.1 316,147Z" fill="#ef5350" opacity="0.85"/>
+<path d="M334,147 Q334,154 327,154 Q320,154 320,147 Q320,144.9 327,144.9 Q334,144.9 334,147Z" fill="#4caf50" opacity="0.85"/>
+<path d="M338,147 Q338,140 345,140 Q352,140 352,147 Q352,149.1 345,149.1 Q338,149.1 338,147Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M363,144.9 Q370,144.9 370,147 Q370,154 363,154 Q356,154 356,147 Q356,144.9 363,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M388,147 Q388,154 381,154 Q374,154 374,147 Q374,144.9 381,144.9 Q388,144.9 388,147Z" fill="#4caf50" opacity="0.85"/>
+<path d="M406,147 Q406,154 399,154 Q392,154 392,147 Q392,144.9 399,144.9 Q406,144.9 406,147Z" fill="#4caf50" opacity="0.85"/>
+<path d="M417,144.9 Q424,144.9 424,147 Q424,154 417,154 Q410,154 410,147 Q410,144.9 417,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M428,147 Q428,140 435,140 Q442,140 442,147 Q442,149.1 435,149.1 Q428,149.1 428,147Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M453,144.9 Q460,144.9 460,147 Q460,154 453,154 Q446,154 446,147 Q446,144.9 453,144.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M478,147 Q478,140 471,140 Q464,140 464,147 Q464,149.1 471,149.1 Q478,149.1 478,147Z" fill="#ef5350" opacity="0.85"/>
+<path d="M496,147 Q496,140 489,140 Q482,140 482,147 Q482,149.1 489,149.1 Q496,149.1 496,147Z" fill="#ef5350" opacity="0.85"/>
+<path d="M39,162.9 Q46,162.9 46,165 Q46,172 39,172 Q32,172 32,165 Q32,162.9 39,162.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M64,165 Q64,158 57,158 Q50,158 50,165 Q50,167.1 57,167.1 Q64,167.1 64,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M82,165 Q82,158 75,158 Q68,158 68,165 Q68,167.1 75,167.1 Q82,167.1 82,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M86,165 Q86,158 93,158 Q100,158 100,165 Q100,167.1 93,167.1 Q86,167.1 86,165Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M118,165 Q118,158 111,158 Q104,158 104,165 Q104,167.1 111,167.1 Q118,167.1 118,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M136,165 Q136,158 129,158 Q122,158 122,165 Q122,167.1 129,167.1 Q136,167.1 136,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M154,165 Q154,172 147,172 Q140,172 140,165 Q140,162.9 147,162.9 Q154,162.9 154,165Z" fill="#4caf50" opacity="0.85"/>
+<path d="M172,165 Q172,158 165,158 Q158,158 158,165 Q158,167.1 165,167.1 Q172,167.1 172,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M176,165 Q176,158 183,158 Q190,158 190,165 Q190,167.1 183,167.1 Q176,167.1 176,165Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M208,165 Q208,172 201,172 Q194,172 194,165 Q194,162.9 201,162.9 Q208,162.9 208,165Z" fill="#4caf50" opacity="0.85"/>
+<path d="M226,165 Q226,158 219,158 Q212,158 212,165 Q212,167.1 219,167.1 Q226,167.1 226,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M237,162.9 Q244,162.9 244,165 Q244,172 237,172 Q230,172 230,165 Q230,162.9 237,162.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M262,165 Q262,172 255,172 Q248,172 248,165 Q248,162.9 255,162.9 Q262,162.9 262,165Z" fill="#4caf50" opacity="0.85"/>
+<path d="M266,165 Q266,158 273,158 Q280,158 280,165 Q280,167.1 273,167.1 Q266,167.1 266,165Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M298,165 Q298,172 291,172 Q284,172 284,165 Q284,162.9 291,162.9 Q298,162.9 298,165Z" fill="#4caf50" opacity="0.85"/>
+<path d="M316,165 Q316,172 309,172 Q302,172 302,165 Q302,162.9 309,162.9 Q316,162.9 316,165Z" fill="#4caf50" opacity="0.85"/>
+<path d="M334,165 Q334,172 327,172 Q320,172 320,165 Q320,162.9 327,162.9 Q334,162.9 334,165Z" fill="#4caf50" opacity="0.85"/>
+<path d="M352,165 Q352,158 345,158 Q338,158 338,165 Q338,167.1 345,167.1 Q352,167.1 352,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M370,165 Q370,158 363,158 Q356,158 356,165 Q356,167.1 363,167.1 Q370,167.1 370,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M388,165 Q388,158 381,158 Q374,158 374,165 Q374,167.1 381,167.1 Q388,167.1 388,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M406,165 Q406,158 399,158 Q392,158 392,165 Q392,167.1 399,167.1 Q406,167.1 406,165Z" fill="#ef5350" opacity="0.85"/>
+<path d="M424,165 Q424,172 417,172 Q410,172 410,165 Q410,162.9 417,162.9 Q424,162.9 424,165Z" fill="#4caf50" opacity="0.85"/>
+<path d="M442,165 Q442,172 435,172 Q428,172 428,165 Q428,162.9 435,162.9 Q442,162.9 442,165Z" fill="#4caf50" opacity="0.85"/>
+<path d="M446,165 Q446,158 453,158 Q460,158 460,165 Q460,167.1 453,167.1 Q446,167.1 446,165Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M471,162.9 Q478,162.9 478,165 Q478,172 471,172 Q464,172 464,165 Q464,162.9 471,162.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M496,165 Q496,172 489,172 Q482,172 482,165 Q482,162.9 489,162.9 Q496,162.9 496,165Z" fill="#4caf50" opacity="0.85"/>
+<path d="M32,183 Q32,176 39,176 Q46,176 46,183 Q46,185.1 39,185.1 Q32,185.1 32,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M50,183 Q50,176 57,176 Q64,176 64,183 Q64,185.1 57,185.1 Q50,185.1 50,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M68,183 Q68,176 75,176 Q82,176 82,183 Q82,185.1 75,185.1 Q68,185.1 68,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M86,183 Q86,176 93,176 Q100,176 100,183 Q100,185.1 93,185.1 Q86,185.1 86,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M104,183 Q104,176 111,176 Q118,176 118,183 Q118,185.1 111,185.1 Q104,185.1 104,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M129,180.9 Q136,180.9 136,183 Q136,190 129,190 Q122,190 122,183 Q122,180.9 129,180.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M140,183 Q140,176 147,176 Q154,176 154,183 Q154,185.1 147,185.1 Q140,185.1 140,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M165,180.9 Q172,180.9 172,183 Q172,190 165,190 Q158,190 158,183 Q158,180.9 165,180.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M176,183 Q176,176 183,176 Q190,176 190,183 Q190,185.1 183,185.1 Q176,185.1 176,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M208,183 Q208,190 201,190 Q194,190 194,183 Q194,180.9 201,180.9 Q208,180.9 208,183Z" fill="#4caf50" opacity="0.85"/>
+<path d="M226,183 Q226,190 219,190 Q212,190 212,183 Q212,180.9 219,180.9 Q226,180.9 226,183Z" fill="#4caf50" opacity="0.85"/>
+<path d="M230,183 Q230,176 237,176 Q244,176 244,183 Q244,185.1 237,185.1 Q230,185.1 230,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M248,183 Q248,176 255,176 Q262,176 262,183 Q262,185.1 255,185.1 Q248,185.1 248,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M273,180.9 Q280,180.9 280,183 Q280,190 273,190 Q266,190 266,183 Q266,180.9 273,180.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M298,183 Q298,190 291,190 Q284,190 284,183 Q284,180.9 291,180.9 Q298,180.9 298,183Z" fill="#4caf50" opacity="0.85"/>
+<path d="M302,183 Q302,176 309,176 Q316,176 316,183 Q316,185.1 309,185.1 Q302,185.1 302,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M334,183 Q334,176 327,176 Q320,176 320,183 Q320,185.1 327,185.1 Q334,185.1 334,183Z" fill="#ef5350" opacity="0.85"/>
+<path d="M352,183 Q352,190 345,190 Q338,190 338,183 Q338,180.9 345,180.9 Q352,180.9 352,183Z" fill="#4caf50" opacity="0.85"/>
+<path d="M370,183 Q370,176 363,176 Q356,176 356,183 Q356,185.1 363,185.1 Q370,185.1 370,183Z" fill="#ef5350" opacity="0.85"/>
+<path d="M381,180.9 Q388,180.9 388,183 Q388,190 381,190 Q374,190 374,183 Q374,180.9 381,180.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M406,183 Q406,176 399,176 Q392,176 392,183 Q392,185.1 399,185.1 Q406,185.1 406,183Z" fill="#ef5350" opacity="0.85"/>
+<path d="M417,180.9 Q424,180.9 424,183 Q424,190 417,190 Q410,190 410,183 Q410,180.9 417,180.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M428,183 Q428,176 435,176 Q442,176 442,183 Q442,185.1 435,185.1 Q428,185.1 428,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M446,183 Q446,176 453,176 Q460,176 460,183 Q460,185.1 453,185.1 Q446,185.1 446,183Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M478,183 Q478,176 471,176 Q464,176 464,183 Q464,185.1 471,185.1 Q478,185.1 478,183Z" fill="#ef5350" opacity="0.85"/>
+<path d="M489,180.9 Q496,180.9 496,183 Q496,190 489,190 Q482,190 482,183 Q482,180.9 489,180.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M46,201 Q46,194 39,194 Q32,194 32,201 Q32,203.1 39,203.1 Q46,203.1 46,201Z" fill="#ef5350" opacity="0.85"/>
+<path d="M50,201 Q50,194 57,194 Q64,194 64,201 Q64,203.1 57,203.1 Q50,203.1 50,201Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M75,198.9 Q82,198.9 82,201 Q82,208 75,208 Q68,208 68,201 Q68,198.9 75,198.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M93,198.9 Q100,198.9 100,201 Q100,208 93,208 Q86,208 86,201 Q86,198.9 93,198.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M104,201 Q104,194 111,194 Q118,194 118,201 Q118,203.1 111,203.1 Q104,203.1 104,201Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M136,201 Q136,194 129,194 Q122,194 122,201 Q122,203.1 129,203.1 Q136,203.1 136,201Z" fill="#ef5350" opacity="0.85"/>
+<path d="M154,201 Q154,194 147,194 Q140,194 140,201 Q140,203.1 147,203.1 Q154,203.1 154,201Z" fill="#ef5350" opacity="0.85"/>
+<path d="M172,201 Q172,194 165,194 Q158,194 158,201 Q158,203.1 165,203.1 Q172,203.1 172,201Z" fill="#ef5350" opacity="0.85"/>
+<path d="M190,201 Q190,208 183,208 Q176,208 176,201 Q176,198.9 183,198.9 Q190,198.9 190,201Z" fill="#4caf50" opacity="0.85"/>
+<path d="M194,201 Q194,194 201,194 Q208,194 208,201 Q208,203.1 201,203.1 Q194,203.1 194,201Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M226,201 Q226,208 219,208 Q212,208 212,201 Q212,198.9 219,198.9 Q226,198.9 226,201Z" fill="#4caf50" opacity="0.85"/>
+<path d="M237,198.9 Q244,198.9 244,201 Q244,208 237,208 Q230,208 230,201 Q230,198.9 237,198.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M262,201 Q262,208 255,208 Q248,208 248,201 Q248,198.9 255,198.9 Q262,198.9 262,201Z" fill="#4caf50" opacity="0.85"/>
+<path d="M266,201 Q266,194 273,194 Q280,194 280,201 Q280,203.1 273,203.1 Q266,203.1 266,201Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M291,198.9 Q298,198.9 298,201 Q298,208 291,208 Q284,208 284,201 Q284,198.9 291,198.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M309,198.9 Q316,198.9 316,201 Q316,208 309,208 Q302,208 302,201 Q302,198.9 309,198.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M334,201 Q334,208 327,208 Q320,208 320,201 Q320,198.9 327,198.9 Q334,198.9 334,201Z" fill="#4caf50" opacity="0.85"/>
+<path d="M352,201 Q352,194 345,194 Q338,194 338,201 Q338,203.1 345,203.1 Q352,203.1 352,201Z" fill="#ef5350" opacity="0.85"/>
+<path d="M356,201 Q356,194 363,194 Q370,194 370,201 Q370,203.1 363,203.1 Q356,203.1 356,201Z" fill="#6ec1ff" opacity="0.85"/>
+<path d="M388,201 Q388,208 381,208 Q374,208 374,201 Q374,198.9 381,198.9 Q388,198.9 388,201Z" fill="#4caf50" opacity="0.85"/>
+<path d="M399,198.9 Q406,198.9 406,201 Q406,208 399,208 Q392,208 392,201 Q392,198.9 399,198.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M417,198.9 Q424,198.9 424,201 Q424,208 417,208 Q410,208 410,201 Q410,198.9 417,198.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M442,201 Q442,208 435,208 Q428,208 428,201 Q428,198.9 435,198.9 Q442,198.9 442,201Z" fill="#4caf50" opacity="0.85"/>
+<path d="M453,198.9 Q460,198.9 460,201 Q460,208 453,208 Q446,208 446,201 Q446,198.9 453,198.9Z" fill="#ffb547" opacity="0.85"/>
+<path d="M478,201 Q478,208 471,208 Q464,208 464,201 Q464,198.9 471,198.9 Q478,198.9 478,201Z" fill="#4caf50" opacity="0.85"/>
+<path d="M496,201 Q496,194 489,194 Q482,194 482,201 Q482,203.1 489,203.1 Q496,203.1 496,201Z" fill="#ef5350" opacity="0.85"/>
+<rect x="30" y="239" width="10" height="10" rx="2" fill="#6ec1ff" opacity="0.85"/>
+<text x="44" y="248" fill="#9aa0a6" font-size="9">0 (UR)</text>
+<rect x="150" y="239" width="10" height="10" rx="2" fill="#ffb547" opacity="0.85"/>
+<text x="164" y="248" fill="#9aa0a6" font-size="9">1 (LR)</text>
+<rect x="270" y="239" width="10" height="10" rx="2" fill="#4caf50" opacity="0.85"/>
+<text x="284" y="248" fill="#9aa0a6" font-size="9">2 (LL)</text>
+<rect x="390" y="239" width="10" height="10" rx="2" fill="#ef5350" opacity="0.85"/>
+<text x="404" y="248" fill="#9aa0a6" font-size="9">3 (UL)</text>
+</svg></div><section class="page" id="pillar-H">
+<h1 class="page-title">Pillar H / #1 &mdash; Title/Labyrinth/PVL</h1>
+<div class="pillar-meta"><table>
+<tr><th>Letter (meme.net.au)</th><td>H</td></tr>
+<tr><th>Number (dkrypt.org)</th><td>1</td></tr>
+<tr><th>Total height</th><td>2569 mm</td></tr>
+<tr><th>Extension above ring</th><td>860 mm</td></tr>
+<tr><th>Fiducial separation</th><td>786 mm</td></tr>
+<tr><th>Fiducial direction</th><td>north-west</td></tr>
+<tr><th>Traversal code</th><td><code>SMOU</code></td></tr>
+<tr><th>Paired with</th><td><a href="#pillar-B">Pillar B</a> &mdash; Compact upper, sparse lower</td></tr>
+</table></div>
+<div class="cipher-card">
+<h3>Labyrinth <span class="badge solved">Solved</span></h3>
+<div class="ciphertype">Direct labyrinth cipher</div>
+<details><summary>Ciphertext</summary><div class="ciphertext">ALABYRINTHSTANDSBEHATAWAIT
+EHTHGUORHTPEOYEROFTSAMGINE
+ATONEBYONESTUATHEYCREATETH
+IEFOENOTUBSIDNSNRETTRAMTHG
+ETWISTSANDTURNSFORPAKALLTH</div></details>
+<div class="poem">A labyrinth stands before you
+ and is but one of eight
+Mark all the twists and turns
+ for patterns they create
+That one by one step through
+ the enigmas that await</div>
+<p class="attribution">Solved by: Glenn McIntosh</p>
+</div>
+<div class="cipher-card">
+<h3>NKRYPT <span class="badge solved">Trivial</span></h3>
+<div class="ciphertype">Title inscription</div>
+</div>
+<div class="cipher-card">
+<h3>PVL <span class="badge final">Final Puzzle</span></h3>
+<div class="ciphertype">26x10 letter grid above ring cipher. Letters P, V, L in larger font.</div>
+<div class="conjecture"><strong>Note:</strong> Likely requires combined keys from all other ciphers. Frequency distribution is flat (not simple substitution).</div>
+<details><summary>Grid data</summary><div class="ciphertext">OXPUWAOEKZVCRLUYFMLXTPNATW
+VGZTCGVGDAAXFDKOCRFRUOKAPW
+LCMPTFPBTYXRSZKKQUBJAMHYUL
+MZVSXXZHDLYHOKWWEJUXLXKRZU
+PPESLBOEKOGRTAYDFOHRHVMPBN
+DTEZBTYDXNMPXHVNKCIYEMJFVE
+MNKDIQBOSUFFFWBVDNKHRTLIMZ
+WRRQUFNNBGKUWNQCHDEFSTZZRQ
+UIUDPTKGATPSJIFXXGGSNTWJLA
+BRYVUCSBNPYAVSTTONZFWIUUNW</div></details>
+</div>
+</section><div class="svg-container"><h3>PVL letter grid (P, V, L highlighted)</h3><svg viewBox="0 0 632 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:632px;font-family:monospace;">
+<rect width="632" height="280" rx="8" fill="#0e1117" stroke="#2a313c"/>
+<text x="41" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="63" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<rect x="75" y="31" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="85" y="45" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="107" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="129" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<text x="151" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<text x="173" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="195" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">E</text>
+<text x="217" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="239" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<rect x="251" y="31" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="261" y="45" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="283" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">C</text>
+<text x="305" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<rect x="317" y="31" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="327" y="45" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">L</text>
+<text x="349" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="371" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">Y</text>
+<text x="393" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="415" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">M</text>
+<rect x="427" y="31" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="437" y="45" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">L</text>
+<text x="459" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="481" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<rect x="493" y="31" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="503" y="45" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="525" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="547" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<text x="569" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="591" y="45" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<rect x="31" y="53" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="41" y="67" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="63" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">G</text>
+<text x="85" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<text x="107" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="129" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">C</text>
+<text x="151" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">G</text>
+<rect x="163" y="53" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="173" y="67" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="195" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">G</text>
+<text x="217" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<text x="239" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<text x="261" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<text x="283" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="305" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="327" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<text x="349" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="371" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="393" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">C</text>
+<text x="415" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="437" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="459" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="481" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="503" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="525" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="547" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<rect x="559" y="53" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="569" y="67" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="591" y="67" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<rect x="31" y="75" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="41" y="89" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">L</text>
+<text x="63" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">C</text>
+<text x="85" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">M</text>
+<rect x="97" y="75" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="107" y="89" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="129" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="151" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<rect x="163" y="75" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="173" y="89" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="195" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<text x="217" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="239" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">Y</text>
+<text x="261" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="283" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="305" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">S</text>
+<text x="327" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<text x="349" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="371" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="393" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">Q</text>
+<text x="415" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="437" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<text x="459" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">J</text>
+<text x="481" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<text x="503" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">M</text>
+<text x="525" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">H</text>
+<text x="547" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">Y</text>
+<text x="569" y="89" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<rect x="581" y="75" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="591" y="89" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">L</text>
+<text x="41" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">M</text>
+<text x="63" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<rect x="75" y="97" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="85" y="111" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="107" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">S</text>
+<text x="129" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="151" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="173" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<text x="195" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">H</text>
+<text x="217" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<rect x="229" y="97" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="239" y="111" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">L</text>
+<text x="261" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">Y</text>
+<text x="283" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">H</text>
+<text x="305" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="327" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="349" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<text x="371" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<text x="393" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">E</text>
+<text x="415" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">J</text>
+<text x="437" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="459" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<rect x="471" y="97" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="481" y="111" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">L</text>
+<text x="503" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="525" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="547" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="569" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<text x="591" y="111" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<rect x="31" y="119" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="41" y="133" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<rect x="53" y="119" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="63" y="133" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="85" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">E</text>
+<text x="107" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">S</text>
+<rect x="119" y="119" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="129" y="133" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">L</text>
+<text x="151" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<text x="173" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="195" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">E</text>
+<text x="217" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="239" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="261" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">G</text>
+<text x="283" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="305" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="327" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<text x="349" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">Y</text>
+<text x="371" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<text x="393" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="415" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="437" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">H</text>
+<text x="459" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="481" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">H</text>
+<rect x="493" y="119" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="503" y="133" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="525" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">M</text>
+<rect x="537" y="119" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="547" y="133" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="569" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<text x="591" y="133" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="41" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<text x="63" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="85" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">E</text>
+<text x="107" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<text x="129" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<text x="151" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="173" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">Y</text>
+<text x="195" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<text x="217" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="239" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="261" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">M</text>
+<rect x="273" y="141" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="283" y="155" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="305" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="327" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">H</text>
+<rect x="339" y="141" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="349" y="155" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="371" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="393" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="415" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">C</text>
+<text x="437" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">I</text>
+<text x="459" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">Y</text>
+<text x="481" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">E</text>
+<text x="503" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">M</text>
+<text x="525" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">J</text>
+<text x="547" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<rect x="559" y="141" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="569" y="155" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="591" y="155" text-anchor="middle" fill="#e8eaed" font-size="10">E</text>
+<text x="41" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">M</text>
+<text x="63" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="85" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="107" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<text x="129" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">I</text>
+<text x="151" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">Q</text>
+<text x="173" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<text x="195" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="217" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">S</text>
+<text x="239" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="261" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="283" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="305" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="327" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<text x="349" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<rect x="361" y="163" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="371" y="177" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="393" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<text x="415" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="437" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="459" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">H</text>
+<text x="481" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="503" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<rect x="515" y="163" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="525" y="177" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">L</text>
+<text x="547" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">I</text>
+<text x="569" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">M</text>
+<text x="591" y="177" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<text x="41" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<text x="63" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="85" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="107" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">Q</text>
+<text x="129" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="151" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="173" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="195" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="217" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<text x="239" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">G</text>
+<text x="261" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="283" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="305" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<text x="327" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="349" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">Q</text>
+<text x="371" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">C</text>
+<text x="393" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">H</text>
+<text x="415" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<text x="437" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">E</text>
+<text x="459" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="481" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">S</text>
+<text x="503" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="525" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<text x="547" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<text x="569" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="591" y="199" text-anchor="middle" fill="#e8eaed" font-size="10">Q</text>
+<text x="41" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="63" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">I</text>
+<text x="85" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="107" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">D</text>
+<rect x="119" y="207" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="129" y="221" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="151" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="173" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">K</text>
+<text x="195" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">G</text>
+<text x="217" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<text x="239" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<rect x="251" y="207" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="261" y="221" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="283" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">S</text>
+<text x="305" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">J</text>
+<text x="327" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">I</text>
+<text x="349" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="371" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="393" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">X</text>
+<text x="415" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">G</text>
+<text x="437" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">G</text>
+<text x="459" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">S</text>
+<text x="481" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="503" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="525" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<text x="547" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">J</text>
+<rect x="559" y="207" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="569" y="221" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">L</text>
+<text x="591" y="221" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<text x="41" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<text x="63" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">R</text>
+<text x="85" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">Y</text>
+<rect x="97" y="229" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="107" y="243" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="129" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="151" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">C</text>
+<text x="173" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">S</text>
+<text x="195" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">B</text>
+<text x="217" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<rect x="229" y="229" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="239" y="243" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">P</text>
+<text x="261" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">Y</text>
+<text x="283" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">A</text>
+<rect x="295" y="229" width="20" height="20" rx="3" fill="#b58aff22" stroke="#b58aff" stroke-width="1"/>
+<text x="305" y="243" text-anchor="middle" fill="#b58aff" font-size="12" font-weight="bold">V</text>
+<text x="327" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">S</text>
+<text x="349" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="371" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">T</text>
+<text x="393" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">O</text>
+<text x="415" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="437" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">Z</text>
+<text x="459" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">F</text>
+<text x="481" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+<text x="503" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">I</text>
+<text x="525" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="547" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">U</text>
+<text x="569" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">N</text>
+<text x="591" y="243" text-anchor="middle" fill="#e8eaed" font-size="10">W</text>
+</svg></div>
+<section class="page" id="pairings">
+<h1 class="page-title">Pillar Pairings</h1>
+<div class="page-subtitle">Structural pairs derived from the Kohlhagen template.</div>
+
+<div class="svg-container"><svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;font-family:monospace;">
+<rect width="600" height="220" rx="8" fill="#0e1117" stroke="#2a313c"/>
+<circle cx="50" cy="80" r="22" fill="none" stroke="#6ec1ff" stroke-width="2"/>
+<text x="50" y="85" text-anchor="middle" fill="#6ec1ff" font-size="16" font-weight="bold">C</text>
+<circle cx="100" cy="80" r="22" fill="none" stroke="#6ec1ff" stroke-width="2"/>
+<text x="100" y="85" text-anchor="middle" fill="#6ec1ff" font-size="16" font-weight="bold">A</text>
+<line x1="72" y1="80" x2="78" y2="80" stroke="#6ec1ff" stroke-width="2"/>
+<text x="75" y="130" text-anchor="middle" fill="#9aa0a6" font-size="9" style="max-width:120px">Tightest pair, same group on b</text>
+<circle cx="190" cy="80" r="22" fill="none" stroke="#b58aff" stroke-width="2"/>
+<text x="190" y="85" text-anchor="middle" fill="#b58aff" font-size="16" font-weight="bold">H</text>
+<circle cx="240" cy="80" r="22" fill="none" stroke="#b58aff" stroke-width="2"/>
+<text x="240" y="85" text-anchor="middle" fill="#b58aff" font-size="16" font-weight="bold">B</text>
+<line x1="212" y1="80" x2="218" y2="80" stroke="#b58aff" stroke-width="2"/>
+<text x="215" y="130" text-anchor="middle" fill="#9aa0a6" font-size="9" style="max-width:120px">Compact upper, sparse lower</text>
+<circle cx="330" cy="80" r="22" fill="none" stroke="#ffb547" stroke-width="2"/>
+<text x="330" y="85" text-anchor="middle" fill="#ffb547" font-size="16" font-weight="bold">G</text>
+<circle cx="380" cy="80" r="22" fill="none" stroke="#ffb547" stroke-width="2"/>
+<text x="380" y="85" text-anchor="middle" fill="#ffb547" font-size="16" font-weight="bold">F</text>
+<line x1="352" y1="80" x2="358" y2="80" stroke="#ffb547" stroke-width="2"/>
+<text x="355" y="130" text-anchor="middle" fill="#9aa0a6" font-size="9" style="max-width:120px">Long lower ciphers</text>
+<circle cx="470" cy="80" r="22" fill="none" stroke="#4caf50" stroke-width="2"/>
+<text x="470" y="85" text-anchor="middle" fill="#4caf50" font-size="16" font-weight="bold">E</text>
+<circle cx="520" cy="80" r="22" fill="none" stroke="#4caf50" stroke-width="2"/>
+<text x="520" y="85" text-anchor="middle" fill="#4caf50" font-size="16" font-weight="bold">D</text>
+<line x1="492" y1="80" x2="498" y2="80" stroke="#4caf50" stroke-width="2"/>
+<text x="495" y="130" text-anchor="middle" fill="#9aa0a6" font-size="9" style="max-width:120px">Mid lower, both pictographic</text>
+<text x="300" y="170" text-anchor="middle" fill="#e8eaed" font-size="11" font-weight="bold">Pillar Pairings (by template analysis)</text>
+<text x="300" y="190" text-anchor="middle" fill="#9aa0a6" font-size="9">Source: Kohlhagen template shared with Schmeh/Dunin 2022</text>
+<text x="300" y="205" text-anchor="middle" fill="#9aa0a6" font-size="9">Ring ciphers at uniform 1709mm | Height variation = extension above ring</text>
+</svg></div>
+
+<p>The Kohlhagen template (shared with Schmeh and Dunin in 2022) reveals that ring ciphers sit at the same height
+across all pillars. Height differences encode the extension above the ring. Lower ciphers cluster into pairs
+by effective extent: G and F, E and D, C and A, H and B.</p>
+
+<div class="key-insight"><strong>Implication:</strong> cross-pillar attacks should target pairs first. A solved pillar may unlock its partner.
+The template sharing was itself a deliberate hint that pillars should be read in relation to each other.</div>
+
+<h2>Pair details</h2>
+
+<div class="cipher-card">
+<h3>C and A</h3>
+<p><strong>Relationship:</strong> Tightest pair, same group on both upper and lower channels</p>
+<p><strong>Cross-pillar attack:</strong> A&#x27;s Caesar/geospatial solutions may key C&#x27;s rotor</p>
+</div>
+
+<div class="cipher-card">
+<h3>H and B</h3>
+<p><strong>Relationship:</strong> Compact upper, sparse lower</p>
+<p><strong>Cross-pillar attack:</strong> B&#x27;s semaphore/scytale solutions feed H&#x27;s labyrinth/PVL</p>
+</div>
+
+<div class="cipher-card">
+<h3>G and F</h3>
+<p><strong>Relationship:</strong> Long lower ciphers</p>
+<p><strong>Cross-pillar attack:</strong> F&#x27;s DNA solution may key G&#x27;s waveform</p>
+</div>
+
+<div class="cipher-card">
+<h3>E and D</h3>
+<p><strong>Relationship:</strong> Mid lower, both pictographic</p>
+<p><strong>Cross-pillar attack:</strong> E&#x27;s railfence/braille solutions may shift D&#x27;s cogs decoding</p>
+</div>
+</section>
+<section class="page" id="rotor-machine">
+<h1 class="page-title">Rotor Machine (Pillar C)</h1>
+<div class="page-subtitle">Enigma-like encryption device with four rotors and a reflector.</div>
+
+<p>Four movable rotors plus fixed reflector, analogous to Enigma but with manual advancement.</p>
+
+<div class="svg-container"><svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:800px;font-family:monospace;">
+<rect width="800" height="320" rx="8" fill="#0e1117" stroke="#2a313c"/>
+<text x="40" y="20" fill="#ffb547" font-size="11" text-anchor="middle" font-weight="bold">Input</text>
+<text x="40" y="30" fill="#9aa0a6" font-size="8" text-anchor="middle">A</text>
+<text x="40" y="41" fill="#9aa0a6" font-size="8" text-anchor="middle">B</text>
+<text x="40" y="52" fill="#9aa0a6" font-size="8" text-anchor="middle">C</text>
+<text x="40" y="63" fill="#9aa0a6" font-size="8" text-anchor="middle">D</text>
+<text x="40" y="74" fill="#9aa0a6" font-size="8" text-anchor="middle">E</text>
+<text x="40" y="85" fill="#9aa0a6" font-size="8" text-anchor="middle">F</text>
+<text x="40" y="96" fill="#9aa0a6" font-size="8" text-anchor="middle">G</text>
+<text x="40" y="107" fill="#9aa0a6" font-size="8" text-anchor="middle">H</text>
+<text x="40" y="118" fill="#9aa0a6" font-size="8" text-anchor="middle">I</text>
+<text x="40" y="129" fill="#9aa0a6" font-size="8" text-anchor="middle">J</text>
+<text x="40" y="140" fill="#9aa0a6" font-size="8" text-anchor="middle">K</text>
+<text x="40" y="151" fill="#9aa0a6" font-size="8" text-anchor="middle">L</text>
+<text x="40" y="162" fill="#9aa0a6" font-size="8" text-anchor="middle">M</text>
+<text x="40" y="173" fill="#9aa0a6" font-size="8" text-anchor="middle">N</text>
+<text x="40" y="184" fill="#9aa0a6" font-size="8" text-anchor="middle">O</text>
+<text x="40" y="195" fill="#9aa0a6" font-size="8" text-anchor="middle">P</text>
+<text x="40" y="206" fill="#9aa0a6" font-size="8" text-anchor="middle">Q</text>
+<text x="40" y="217" fill="#9aa0a6" font-size="8" text-anchor="middle">R</text>
+<text x="40" y="228" fill="#9aa0a6" font-size="8" text-anchor="middle">S</text>
+<text x="40" y="239" fill="#9aa0a6" font-size="8" text-anchor="middle">T</text>
+<text x="40" y="250" fill="#9aa0a6" font-size="8" text-anchor="middle">U</text>
+<text x="40" y="261" fill="#9aa0a6" font-size="8" text-anchor="middle">V</text>
+<text x="40" y="272" fill="#9aa0a6" font-size="8" text-anchor="middle">W</text>
+<text x="40" y="283" fill="#9aa0a6" font-size="8" text-anchor="middle">X</text>
+<text x="40" y="294" fill="#9aa0a6" font-size="8" text-anchor="middle">Y</text>
+<text x="40" y="305" fill="#9aa0a6" font-size="8" text-anchor="middle">Z</text>
+<text x="160" y="20" fill="#ffb547" font-size="11" text-anchor="middle" font-weight="bold">R1</text>
+<text x="160" y="30" fill="#9aa0a6" font-size="8" text-anchor="middle">A</text>
+<text x="160" y="41" fill="#9aa0a6" font-size="8" text-anchor="middle">B</text>
+<text x="160" y="52" fill="#9aa0a6" font-size="8" text-anchor="middle">C</text>
+<text x="160" y="63" fill="#9aa0a6" font-size="8" text-anchor="middle">D</text>
+<text x="160" y="74" fill="#9aa0a6" font-size="8" text-anchor="middle">E</text>
+<text x="160" y="85" fill="#9aa0a6" font-size="8" text-anchor="middle">F</text>
+<text x="160" y="96" fill="#9aa0a6" font-size="8" text-anchor="middle">G</text>
+<text x="160" y="107" fill="#9aa0a6" font-size="8" text-anchor="middle">H</text>
+<text x="160" y="118" fill="#9aa0a6" font-size="8" text-anchor="middle">I</text>
+<text x="160" y="129" fill="#9aa0a6" font-size="8" text-anchor="middle">J</text>
+<text x="160" y="140" fill="#9aa0a6" font-size="8" text-anchor="middle">K</text>
+<text x="160" y="151" fill="#9aa0a6" font-size="8" text-anchor="middle">L</text>
+<text x="160" y="162" fill="#9aa0a6" font-size="8" text-anchor="middle">M</text>
+<text x="160" y="173" fill="#9aa0a6" font-size="8" text-anchor="middle">N</text>
+<text x="160" y="184" fill="#9aa0a6" font-size="8" text-anchor="middle">O</text>
+<text x="160" y="195" fill="#9aa0a6" font-size="8" text-anchor="middle">P</text>
+<text x="160" y="206" fill="#9aa0a6" font-size="8" text-anchor="middle">Q</text>
+<text x="160" y="217" fill="#9aa0a6" font-size="8" text-anchor="middle">R</text>
+<text x="160" y="228" fill="#9aa0a6" font-size="8" text-anchor="middle">S</text>
+<text x="160" y="239" fill="#9aa0a6" font-size="8" text-anchor="middle">T</text>
+<text x="160" y="250" fill="#9aa0a6" font-size="8" text-anchor="middle">U</text>
+<text x="160" y="261" fill="#9aa0a6" font-size="8" text-anchor="middle">V</text>
+<text x="160" y="272" fill="#9aa0a6" font-size="8" text-anchor="middle">W</text>
+<text x="160" y="283" fill="#9aa0a6" font-size="8" text-anchor="middle">X</text>
+<text x="160" y="294" fill="#9aa0a6" font-size="8" text-anchor="middle">Y</text>
+<text x="160" y="305" fill="#9aa0a6" font-size="8" text-anchor="middle">Z</text>
+<text x="300" y="20" fill="#ffb547" font-size="11" text-anchor="middle" font-weight="bold">R2</text>
+<text x="300" y="30" fill="#9aa0a6" font-size="8" text-anchor="middle">A</text>
+<text x="300" y="41" fill="#9aa0a6" font-size="8" text-anchor="middle">B</text>
+<text x="300" y="52" fill="#9aa0a6" font-size="8" text-anchor="middle">C</text>
+<text x="300" y="63" fill="#9aa0a6" font-size="8" text-anchor="middle">D</text>
+<text x="300" y="74" fill="#9aa0a6" font-size="8" text-anchor="middle">E</text>
+<text x="300" y="85" fill="#9aa0a6" font-size="8" text-anchor="middle">F</text>
+<text x="300" y="96" fill="#9aa0a6" font-size="8" text-anchor="middle">G</text>
+<text x="300" y="107" fill="#9aa0a6" font-size="8" text-anchor="middle">H</text>
+<text x="300" y="118" fill="#9aa0a6" font-size="8" text-anchor="middle">I</text>
+<text x="300" y="129" fill="#9aa0a6" font-size="8" text-anchor="middle">J</text>
+<text x="300" y="140" fill="#9aa0a6" font-size="8" text-anchor="middle">K</text>
+<text x="300" y="151" fill="#9aa0a6" font-size="8" text-anchor="middle">L</text>
+<text x="300" y="162" fill="#9aa0a6" font-size="8" text-anchor="middle">M</text>
+<text x="300" y="173" fill="#9aa0a6" font-size="8" text-anchor="middle">N</text>
+<text x="300" y="184" fill="#9aa0a6" font-size="8" text-anchor="middle">O</text>
+<text x="300" y="195" fill="#9aa0a6" font-size="8" text-anchor="middle">P</text>
+<text x="300" y="206" fill="#9aa0a6" font-size="8" text-anchor="middle">Q</text>
+<text x="300" y="217" fill="#9aa0a6" font-size="8" text-anchor="middle">R</text>
+<text x="300" y="228" fill="#9aa0a6" font-size="8" text-anchor="middle">S</text>
+<text x="300" y="239" fill="#9aa0a6" font-size="8" text-anchor="middle">T</text>
+<text x="300" y="250" fill="#9aa0a6" font-size="8" text-anchor="middle">U</text>
+<text x="300" y="261" fill="#9aa0a6" font-size="8" text-anchor="middle">V</text>
+<text x="300" y="272" fill="#9aa0a6" font-size="8" text-anchor="middle">W</text>
+<text x="300" y="283" fill="#9aa0a6" font-size="8" text-anchor="middle">X</text>
+<text x="300" y="294" fill="#9aa0a6" font-size="8" text-anchor="middle">Y</text>
+<text x="300" y="305" fill="#9aa0a6" font-size="8" text-anchor="middle">Z</text>
+<text x="440" y="20" fill="#ffb547" font-size="11" text-anchor="middle" font-weight="bold">R3</text>
+<text x="440" y="30" fill="#9aa0a6" font-size="8" text-anchor="middle">A</text>
+<text x="440" y="41" fill="#9aa0a6" font-size="8" text-anchor="middle">B</text>
+<text x="440" y="52" fill="#9aa0a6" font-size="8" text-anchor="middle">C</text>
+<text x="440" y="63" fill="#9aa0a6" font-size="8" text-anchor="middle">D</text>
+<text x="440" y="74" fill="#9aa0a6" font-size="8" text-anchor="middle">E</text>
+<text x="440" y="85" fill="#9aa0a6" font-size="8" text-anchor="middle">F</text>
+<text x="440" y="96" fill="#9aa0a6" font-size="8" text-anchor="middle">G</text>
+<text x="440" y="107" fill="#9aa0a6" font-size="8" text-anchor="middle">H</text>
+<text x="440" y="118" fill="#9aa0a6" font-size="8" text-anchor="middle">I</text>
+<text x="440" y="129" fill="#9aa0a6" font-size="8" text-anchor="middle">J</text>
+<text x="440" y="140" fill="#9aa0a6" font-size="8" text-anchor="middle">K</text>
+<text x="440" y="151" fill="#9aa0a6" font-size="8" text-anchor="middle">L</text>
+<text x="440" y="162" fill="#9aa0a6" font-size="8" text-anchor="middle">M</text>
+<text x="440" y="173" fill="#9aa0a6" font-size="8" text-anchor="middle">N</text>
+<text x="440" y="184" fill="#9aa0a6" font-size="8" text-anchor="middle">O</text>
+<text x="440" y="195" fill="#9aa0a6" font-size="8" text-anchor="middle">P</text>
+<text x="440" y="206" fill="#9aa0a6" font-size="8" text-anchor="middle">Q</text>
+<text x="440" y="217" fill="#9aa0a6" font-size="8" text-anchor="middle">R</text>
+<text x="440" y="228" fill="#9aa0a6" font-size="8" text-anchor="middle">S</text>
+<text x="440" y="239" fill="#9aa0a6" font-size="8" text-anchor="middle">T</text>
+<text x="440" y="250" fill="#9aa0a6" font-size="8" text-anchor="middle">U</text>
+<text x="440" y="261" fill="#9aa0a6" font-size="8" text-anchor="middle">V</text>
+<text x="440" y="272" fill="#9aa0a6" font-size="8" text-anchor="middle">W</text>
+<text x="440" y="283" fill="#9aa0a6" font-size="8" text-anchor="middle">X</text>
+<text x="440" y="294" fill="#9aa0a6" font-size="8" text-anchor="middle">Y</text>
+<text x="440" y="305" fill="#9aa0a6" font-size="8" text-anchor="middle">Z</text>
+<text x="580" y="20" fill="#ffb547" font-size="11" text-anchor="middle" font-weight="bold">R4</text>
+<text x="580" y="30" fill="#9aa0a6" font-size="8" text-anchor="middle">A</text>
+<text x="580" y="41" fill="#9aa0a6" font-size="8" text-anchor="middle">B</text>
+<text x="580" y="52" fill="#9aa0a6" font-size="8" text-anchor="middle">C</text>
+<text x="580" y="63" fill="#9aa0a6" font-size="8" text-anchor="middle">D</text>
+<text x="580" y="74" fill="#9aa0a6" font-size="8" text-anchor="middle">E</text>
+<text x="580" y="85" fill="#9aa0a6" font-size="8" text-anchor="middle">F</text>
+<text x="580" y="96" fill="#9aa0a6" font-size="8" text-anchor="middle">G</text>
+<text x="580" y="107" fill="#9aa0a6" font-size="8" text-anchor="middle">H</text>
+<text x="580" y="118" fill="#9aa0a6" font-size="8" text-anchor="middle">I</text>
+<text x="580" y="129" fill="#9aa0a6" font-size="8" text-anchor="middle">J</text>
+<text x="580" y="140" fill="#9aa0a6" font-size="8" text-anchor="middle">K</text>
+<text x="580" y="151" fill="#9aa0a6" font-size="8" text-anchor="middle">L</text>
+<text x="580" y="162" fill="#9aa0a6" font-size="8" text-anchor="middle">M</text>
+<text x="580" y="173" fill="#9aa0a6" font-size="8" text-anchor="middle">N</text>
+<text x="580" y="184" fill="#9aa0a6" font-size="8" text-anchor="middle">O</text>
+<text x="580" y="195" fill="#9aa0a6" font-size="8" text-anchor="middle">P</text>
+<text x="580" y="206" fill="#9aa0a6" font-size="8" text-anchor="middle">Q</text>
+<text x="580" y="217" fill="#9aa0a6" font-size="8" text-anchor="middle">R</text>
+<text x="580" y="228" fill="#9aa0a6" font-size="8" text-anchor="middle">S</text>
+<text x="580" y="239" fill="#9aa0a6" font-size="8" text-anchor="middle">T</text>
+<text x="580" y="250" fill="#9aa0a6" font-size="8" text-anchor="middle">U</text>
+<text x="580" y="261" fill="#9aa0a6" font-size="8" text-anchor="middle">V</text>
+<text x="580" y="272" fill="#9aa0a6" font-size="8" text-anchor="middle">W</text>
+<text x="580" y="283" fill="#9aa0a6" font-size="8" text-anchor="middle">X</text>
+<text x="580" y="294" fill="#9aa0a6" font-size="8" text-anchor="middle">Y</text>
+<text x="580" y="305" fill="#9aa0a6" font-size="8" text-anchor="middle">Z</text>
+<text x="720" y="20" fill="#ffb547" font-size="11" text-anchor="middle" font-weight="bold">Reflector</text>
+<text x="720" y="30" fill="#9aa0a6" font-size="8" text-anchor="middle">A</text>
+<text x="720" y="41" fill="#9aa0a6" font-size="8" text-anchor="middle">B</text>
+<text x="720" y="52" fill="#9aa0a6" font-size="8" text-anchor="middle">C</text>
+<text x="720" y="63" fill="#9aa0a6" font-size="8" text-anchor="middle">D</text>
+<text x="720" y="74" fill="#9aa0a6" font-size="8" text-anchor="middle">E</text>
+<text x="720" y="85" fill="#9aa0a6" font-size="8" text-anchor="middle">F</text>
+<text x="720" y="96" fill="#9aa0a6" font-size="8" text-anchor="middle">G</text>
+<text x="720" y="107" fill="#9aa0a6" font-size="8" text-anchor="middle">H</text>
+<text x="720" y="118" fill="#9aa0a6" font-size="8" text-anchor="middle">I</text>
+<text x="720" y="129" fill="#9aa0a6" font-size="8" text-anchor="middle">J</text>
+<text x="720" y="140" fill="#9aa0a6" font-size="8" text-anchor="middle">K</text>
+<text x="720" y="151" fill="#9aa0a6" font-size="8" text-anchor="middle">L</text>
+<text x="720" y="162" fill="#9aa0a6" font-size="8" text-anchor="middle">M</text>
+<text x="720" y="173" fill="#9aa0a6" font-size="8" text-anchor="middle">N</text>
+<text x="720" y="184" fill="#9aa0a6" font-size="8" text-anchor="middle">O</text>
+<text x="720" y="195" fill="#9aa0a6" font-size="8" text-anchor="middle">P</text>
+<text x="720" y="206" fill="#9aa0a6" font-size="8" text-anchor="middle">Q</text>
+<text x="720" y="217" fill="#9aa0a6" font-size="8" text-anchor="middle">R</text>
+<text x="720" y="228" fill="#9aa0a6" font-size="8" text-anchor="middle">S</text>
+<text x="720" y="239" fill="#9aa0a6" font-size="8" text-anchor="middle">T</text>
+<text x="720" y="250" fill="#9aa0a6" font-size="8" text-anchor="middle">U</text>
+<text x="720" y="261" fill="#9aa0a6" font-size="8" text-anchor="middle">V</text>
+<text x="720" y="272" fill="#9aa0a6" font-size="8" text-anchor="middle">W</text>
+<text x="720" y="283" fill="#9aa0a6" font-size="8" text-anchor="middle">X</text>
+<text x="720" y="294" fill="#9aa0a6" font-size="8" text-anchor="middle">Y</text>
+<text x="720" y="305" fill="#9aa0a6" font-size="8" text-anchor="middle">Z</text>
+<text x="400" y="315" fill="#9aa0a6" font-size="10" text-anchor="middle">4 rotors + reflector | Manual advancement | Key = 4 letters (e.g. SWYQ)</text>
+</svg></div>
+
+<h2>Rotor wirings</h2>
+
+<details><summary>Rotor 1</summary>
+<div class="ciphertext">Plain:  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Cipher: UDBCFGEJHILMKTSNOPQRWXYZAV</div>
+</details>
+
+<details><summary>Rotor 2</summary>
+<div class="ciphertext">Plain:  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Cipher: BZCXWHIFGLMJKVUPSQRTONEDYA</div>
+</details>
+
+<details><summary>Rotor 3</summary>
+<div class="ciphertext">Plain:  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Cipher: ZADEFGCHMIJKLOPQRNWSTUVBXY</div>
+</details>
+
+<details><summary>Rotor 4</summary>
+<div class="ciphertext">Plain:  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Cipher: BDFCEGIJKLSMAZNHOPQRTVXUWY</div>
+</details>
+
+<details><summary>Reflector</summary>
+<div class="ciphertext">Plain:  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Cipher: ZYVMLIHGFKJEDURQPOTSNCXWBA</div>
+</details>
+
+<h2>Key properties</h2>
+<p><strong>Key format:</strong> 4-letter string setting offsets for rotors 1-4<br>
+<strong>Involutive:</strong> Yes (encrypt = decrypt with same key, no advancement)<br>
+<strong>Advancement:</strong> Manual (encoder chooses stepping sequence; no automatic odometer)</p>
+</section>
+
+<section class="page" id="basecode">
+<h1 class="page-title">Base Code DNA</h1>
+<div class="page-subtitle">15 autosomal STR loci per pillar base, matching PowerPlex 16 HS forensic DNA profiling.</div>
+
+<h2>STR profiles (15 loci per pillar)</h2>
+<div style="overflow-x:auto;">
+<table class="canon">
+<thead><tr><th>Pillar</th><th>CSF1PO</th><th>D13S317</th><th>D16S539</th><th>D18S51</th><th>D21S11</th><th>D3S1358</th><th>D5S818</th><th>D7S820</th><th>D8S1179</th><th>FGA</th><th>PentaD</th><th>PentaE</th><th>TH01</th><th>TPOX</th><th>vWA</th></tr></thead>
+<tbody>
+<tr><td><strong>A</strong></td><td>10/11</td><td>9/11</td><td>9/12</td><td>13/17</td><td>28/29</td><td>15/17</td><td>11/12</td><td>11/12</td><td>11/13</td><td>20/24</td><td>9/13</td><td>11/11</td><td>7/9.3</td><td>11/11</td><td>14/17</td></tr><tr><td><strong>B</strong></td><td>10/10</td><td>9/12</td><td>11/13</td><td>15/17</td><td>28/30</td><td>17/18</td><td>11/12</td><td>8/10</td><td>14/15</td><td>22/24</td><td>12/13</td><td>11/12</td><td>7/10</td><td>8/11</td><td>14/17</td></tr><tr><td><strong>C</strong></td><td>10/10</td><td>11/12</td><td>11/13</td><td>14/15</td><td>30/30</td><td>17/18</td><td>12/12</td><td>8/10</td><td>14/14</td><td>19/22</td><td>12/12</td><td>11/13</td><td>7/7</td><td>8/8</td><td>14/17</td></tr><tr><td><strong>D</strong></td><td>10/11</td><td>9/14</td><td>12/13</td><td>15/17</td><td>28/30</td><td>17/17</td><td>11/11</td><td>8/12</td><td>13/15</td><td>22/24</td><td>9/13</td><td>11/11</td><td>9.3/10</td><td>8/11</td><td>14/17</td></tr><tr><td><strong>E</strong></td><td>10/11</td><td>12/14</td><td>11/13</td><td>15/22</td><td>28/30</td><td>16/17</td><td>11/13</td><td>8/10</td><td>12/15</td><td>22/22</td><td>10/13</td><td>11/13</td><td>9/10</td><td>8/8</td><td>16/17</td></tr><tr><td><strong>F</strong></td><td>10/12</td><td>12/14</td><td>11/12</td><td>14/15</td><td>28/30</td><td>16/17</td><td>11/11</td><td>8/10</td><td>10/15</td><td>19/24</td><td>9/12</td><td>11/13</td><td>9/9.3</td><td>8/8</td><td>14/17</td></tr><tr><td><strong>G</strong></td><td>11/12</td><td>9/12</td><td>11/13</td><td>15/17</td><td>28/30</td><td>17/18</td><td>11/11</td><td>10/12</td><td>13/14</td><td>19/24</td><td>12/13</td><td>11/12</td><td>7/9.3</td><td>8/11</td><td>14/17</td></tr><tr><td><strong>H</strong></td><td>10/12</td><td>11/12</td><td>11/11</td><td>14/17</td><td>30/30</td><td>16/18</td><td>11/12</td><td>10/10</td><td>10/14</td><td>19/24</td><td>12/12</td><td>12/13</td><td>7/9</td><td>8/11</td><td>14/14</td></tr>
+</tbody></table>
+</div>
+
+<h2>Conjectured relationships</h2>
+<p>Population origin: European/Asian origin probable. Possible parental connections: AE->D, HD->F, HD->G, HD->B or HB->C.</p>
+<div class="conjecture">If these are genetic fingerprints of real people, Kohlhagen may have immortalised his own family.
+The relationships between profiles have not been conclusively determined.</div>
+</section>
+
+<section class="page" id="tweet">
+<h1 class="page-title">Opening Day Tweet</h1>
+<div class="page-subtitle">Encrypted tweet by Senator Kate Lundy, 4 March 2013.</div>
+
+<div class="ciphertext">hdxjnfjxzjezthdbmmwqzjturogoucrfruohhzmlqpmbkuykkcrnkdlndlxjnidihjihqkwdpci</div>
+<p><strong>Length:</strong> 75 characters</p>
+
+<h2>Partial solution</h2>
+<p>Positions 59-74 (last 16 chars) decrypt to <code>thecentenarycode</code>
+using rotor key <code>SWYQ</code>.</p>
+<div class="conjecture">SWYQ = ROT13(FJLD), where FJLD is the 6th group of rotor ciphertext line 1</div>
+
+<p><strong>Unsolved:</strong> First 59 characters.</p>
+<p>A photograph from the opening ceremony shows rotor setting <code>CYWE (from opening day photograph)</code>.</p>
+
+<div class="key-insight">Stuart Kohlhagen wrote: "the piece was developed before we had her or the idea of a coded tweet
+in mind... and we did want to suggest that if folk wanted to they could select their own coding protocol...
+perhaps thinking about how a person might select a protocol based on a specifically personal 'attribute' might help
+with HER tweet." The emphasis on "HER" and "personal attribute" may be significant.</div>
+</section>
+
+<section class="page" id="sources">
+<h1 class="page-title">Sources</h1>
+<div class="page-subtitle">All data on this site is sourced from the following references.</div>
+
+<table class="canon">
+<thead><tr><th>Source</th><th>Description</th><th>Key contributions</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.meme.net.au/nkrypt/">meme.net.au/nkrypt</a></td><td>Glenn McIntosh</td><td>Most comprehensive analysis; pillar naming A-H; transcriptions; C++ rotor implementation; SVG diagrams</td></tr>
+<tr><td><a href="https://www.dkrypt.org/">dkrypt.org</a></td><td>Greg Lloyd</td><td>High-resolution photographs; pillar numbering 1-8; detailed per-pillar pages</td></tr>
+<tr><td><a href="https://scienceblogs.de/klausis-krypto-kolumne/">Cipherbrain (Klaus Schmeh)</a></td><td>Cryptology historian</td><td>Multiple articles; 2022 video interview with Kohlhagen; squircle codon hint</td></tr>
+<tr><td><a href="https://www.questacon.edu.au/visiting/galleries/outdoor/exhibits/nkrypt">Questacon</a></td><td>Official source</td><td>Background, design intent, Centenary Code challenge</td></tr>
+</tbody>
+</table>
+
+<h2>Machine-readable data</h2>
+<p>All structured data from this site is available as <a href="nkrypt-data.json">nkrypt-data.json</a> for programmatic access and LLM consumption.</p>
+</section>
+
+<div class="footer">
+<p>NKRYPT Reference Site. Data compiled from meme.net.au, dkrypt.org, Cipherbrain, and Questacon sources.
+This is an independent research project and is not affiliated with Questacon or Dr Stuart Kohlhagen.</p>
+<p>Built April 2026. Hosted on GitHub Pages.</p>
+</div>
+
+</main>
+</div>
+</body>
+</html>
