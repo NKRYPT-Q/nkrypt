@@ -12,14 +12,14 @@ Kohlhagen has stated there are approximately 60 puzzles on and around the eight 
 
 ## Reference Material
 
-All reference data lives in this project folder. The canonical reference site is at `docs/index.html`, which is also published as a GitHub Pages site. The machine-readable data backing it is at `docs/nkrypt-data.json`.
+All reference data lives in this project folder. The canonical reference site is at `site/index.html`, which is also published as a GitHub Pages site. The machine-readable data backing it is at `site/nkrypt-data.json`.
 
 **Priority order for lookups:**
-1. `docs/nkrypt-data.json` -- structured JSON with all pillar data, ciphertexts, solutions, and cross-references.
-2. `docs/index.html` -- the rendered reference site.
+1. `site/nkrypt-data.json` -- structured JSON with all pillar data, ciphertexts, solutions, and cross-references.
+2. `site/index.html` -- the rendered reference site.
 3. `reference-docs-md/` -- clean Markdown conversions of all external sources.
-4. `reference-docs/` -- original .docx files (only if exact formatting matters).
-5. `photos/` -- high-resolution photographs of each pillar.
+4. `reference-docs/` -- original images and maps.
+5. `pillars/` -- high-resolution photographs of each pillar, plus vector source files (SVG, PDF).
 6. Live web sources: [meme.net.au/nkrypt](https://www.meme.net.au/nkrypt/), [dkrypt.org](https://www.dkrypt.org/), [Cipherbrain](https://scienceblogs.de/klausis-krypto-kolumne/).
 
 ---
@@ -75,18 +75,18 @@ Between each pair of rows there is exactly one "down" transition and one "up" tr
 
 **Pillar G's traversal code is unknown.** Solving the squircle cipher should reveal it.
 
-### Pillar Pairings
+### Pillar Pairings (SPECULATIVE)
 
-Analysis of the Kohlhagen template (shared with Schmeh and Dunin in 2022) reveals structural pairs:
+**Status: Unverified hypothesis.** The following pairings were inferred from analysis of the Kohlhagen template (shared with Schmeh and Dunin in 2022) but have NOT been confirmed by the creator. Treat as one possible interpretation, not fact.
 
-| Pair | Relationship | Cross-pillar hypothesis |
-|------|-------------|------------------------|
-| C and A | Tightest pair (same group on both upper and lower extent channels) | A's solved Caesar/geospatial data may key C's rotor cipher |
+| Pair | Basis | Speculative cross-pillar hypothesis |
+|------|-------|-------------------------------------|
+| C and A | Tightest pair in template extent channels | A's solved Caesar/geospatial data may key C's rotor cipher |
 | H and B | Compact upper, sparse lower | B's solved semaphore/scytale solutions feed H's PVL |
 | G and F | Long lower ciphers | F's solved DNA codon output may key G's waveform |
 | E and D | Mid lower, both pictographic | E's solved railfence/braille solutions may shift D's cogs |
 
-The template sharing was itself a deliberate hint: pillars should be read in relation to each other, not independently.
+Kohlhagen did confirm that pillars should be read in relation to each other, not independently. However, the specific pairing assignments above are analytical inferences and may be wrong. Alternative groupings should be considered.
 
 ### Constellation Layout
 
@@ -170,14 +170,14 @@ Key fact: `ROT13(FJLD) = SWYQ`. Using rotor key SWYQ with no advancement decodes
 | 6 | 5 | A \| B \| CD \| E \| FG |
 | 7 | 7 | A \| B \| C \| D \| E \| FG \| HI |
 
-Authoritative vector source: `photos/Pillar 2 - Cogs/Vertically Aligned Cogs/Cogs.pdf`. Note: horizontal spacing between columns is inaccurate (parallax); only vertical order within columns is reliable.
+Authoritative vector sources: `pillars/Pillar 2 D - Cogs/Cogs.pdf` and `pillars/Pillar 2 D - Cogs/cogs.svg`. Note: horizontal spacing between columns is inaccurate (parallax); only vertical order within columns is reliable.
 
 ### Pillar F (#3) -- Astroids (lower)
 Four-pointed star glyphs (U+2726) in 42 columns with irregular vertical spacing. Each astroid is approximately 15 mm across, columns spaced approximately 22 mm apart.
 
 **Per-column counts:** [4, 4, 18, 6, 4, 10, 3, 13, 4, 13, 8, 12, 4, 4, 3, 12, 9, 11, 9, 8, 12, 4, 10, 10, 13, 16, 11, 14, 7, 12, 6, 4, 6, 3, 11, 6, 16, 15, 6, 8, 12, 8]
 
-Mean 8.79 per column, range 3-18, 14 distinct count values. Canonical source: `figures/Astroid.svg` (369 astroids with sub-pixel y precision). Conjecture: may represent light spectra.
+Mean 8.79 per column, range 3-18, 14 distinct count values. Canonical source: `pillars/Pillar 3 F - Hexstars/Astroid.svg` (369 astroids with sub-pixel y precision). Conjecture: may represent light spectra.
 
 ### Pillar G (#5) -- Squircles (ring)
 10x26 grid of 4-orientation petal/cam shapes (encoded 0-3):
@@ -276,7 +276,7 @@ Kohlhagen wrote: "the piece was developed before we had her or the idea of a cod
 
 15 autosomal STR loci per pillar base, matching PowerPlex 16 HS forensic DNA profiling. Loci order (alphabetic): CSF1PO, D13S317, D16S539, D18S51, D21S11, D3S1358, D5S818, D7S820, D8S1179, FGA, PentaD, PentaE, TH01, TPOX, vWA.
 
-Full profiles are in `docs/nkrypt-data.json`. Population: European/Asian origin probable. Conjectured parental connections: AE to D, HD to F, HD to G, and either HD to B or HB to C.
+Full profiles are in `site/nkrypt-data.json`. Population: European/Asian origin probable. Conjectured parental connections: AE to D, HD to F, HD to G, and either HD to B or HB to C.
 
 ---
 
@@ -297,7 +297,8 @@ Full profiles are in `docs/nkrypt-data.json`. Population: European/Asian origin 
 - **Australian English** in all output.
 - **No hallucinations.** Flag uncertainty. If unsure about a transcription or analysis, say so.
 - **Show your working.** Document method, parameters, and results for every attempt.
-- **Preserve original data.** Never modify files in `photos/` or `reference-docs/`. Work in `working/`.
+- **Preserve original data.** Never modify files in `pillars/` or `reference-docs/`. Work in `working/`.
 - **Small steps.** Start with one approach and check in before trying the next.
 - **Cite sources.** Note whether information came from meme.net.au, dkrypt.org, Schmeh, or the canonical JSON.
-- **Use the JSON.** `docs/nkrypt-data.json` is the single source of truth for all structured data. Read it before starting work on any cipher.
+- **Use the JSON.** `site/nkrypt-data.json` is the single source of truth for all structured data. Read it before starting work on any cipher.
+- **Distinguish fact from hypothesis.** Clearly label what is confirmed by Kohlhagen versus what is analytical inference or conjecture.
